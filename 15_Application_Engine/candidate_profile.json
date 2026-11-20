@@ -145,14 +145,16 @@
     "target_locations": [],
     "remote_preference": null,
     "relocation_preference": null,
-    "sponsorship_requirement": "SYNTHETIC: the candidate would need employer sponsorship outside the countries listed in work_authorization_facts.",
+    "sponsorship_requirement": "SYNTHETIC: authorized to work in Exampleland; would need sponsorship in Otherland.",
     "evidence": "SYNTHETIC"
   },
   "work_authorization_facts": {
-    "authorized_countries": [],
+    "authorized_countries": [
+      "Exampleland"
+    ],
     "citizen_or_resident_countries": [],
     "requires_sponsorship_countries": [
-      "Exampleland"
+      "Otherland"
     ],
     "evidence": "SYNTHETIC \u2014 list the countries where you can already work, hold citizenship/permanent residency, or would need sponsorship."
   },

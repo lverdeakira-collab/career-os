@@ -1,4 +1,4 @@
-# Career_OS Fit Scoring Model v0.1
+# Fit Scoring Model
 
 The score is transparent, evidence-based, and totals exactly 100 points.
 
@@ -11,7 +11,9 @@ The score is transparent, evidence-based, and totals exactly 100 points.
 | Education Match | 10 | Degree level, finance/business alignment, quantitative coursework |
 | Career Preference / Practical Fit | 5 | Known location, work arrangement, level, and target direction only |
 
-Required skills control 70% of the Skills component; preferred skills control 30%. When no preferred skills are listed, that portion is neutral rather than punitive. Unsupported claims score zero.
+Required skills control 70% of the Skills component; preferred skills control 30%. When no preferred skills are listed, that portion is neutral rather than punitive. Requirements the profile does not evidence earn partial credit (`UNKNOWN`, 0.25); requirements the profile confirms are absent earn none (`MISSING`). All points, thresholds and keyword lists are in `11_Automation/fit_scoring/weights.json`; the code contains no scoring constants.
+
+Each result reports both `Score_Band_Decision` (what the score alone would give) and `Decision` (after gate overrides), so a reviewer can see how the score and the gates interact.
 
 ## Bands and hard-gate precedence
 

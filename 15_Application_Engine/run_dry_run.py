@@ -60,7 +60,7 @@ def evaluate_job(
     job['Circuit_Breaker'] = gate['Circuit_Breaker']
     job['Prompt_Injection_Signals'] = detect_untrusted_instructions(job)
     scoring = score_job(job, profile, route, gate, gaps, strategy)
-    for key in ['Fit_Score', 'Fit_Score_Breakdown', 'Assessment_Confidence', 'Decision', 'Status', 'Top_Matches', 'Gaps', 'Gap_Count']:
+    for key in ['Fit_Score', 'Fit_Score_Breakdown', 'Score_Band_Decision', 'Assessment_Confidence', 'Decision', 'Status', 'Top_Matches', 'Gaps', 'Gap_Count']:
         job[key] = scoring[key]
     job['Fit_Explanation'] = scoring['Explanation']
     return job
