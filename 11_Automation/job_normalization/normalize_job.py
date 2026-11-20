@@ -22,7 +22,7 @@ JOB_FIELDS = [
     'Duplicate_Canonical_Job_ID', 'Notes', 'Synthetic_Test',
     'Hardening_Version', 'Primary_Resume', 'Primary_Reason', 'Optional_Secondary_Resume',
     'Secondary_Reason', 'Secondary_Allowed', 'Routing_Human_Review_Required', 'Base_Selection_Scores',
-    'Work_Authorization_Assessment', 'Language_Assessments',
+    'Work_Authorization_Assessment', 'Language_Assessments', 'Score_Band_Decision',
     'Circuit_Breaker', 'Prompt_Injection_Signals'
 ]
 
