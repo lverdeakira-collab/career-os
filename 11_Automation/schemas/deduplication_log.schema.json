@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Career_OS Deduplication Log v0.1",
+  "type": "object",
+  "required": ["schema_version", "run_id", "created_at", "comparisons", "exact_or_high_confidence_duplicates", "possible_duplicates", "auto_delete"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "run_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "comparisons": {"type": "array", "items": {"type": "object"}},
+    "exact_or_high_confidence_duplicates": {"type": "integer", "minimum": 0},
+    "possible_duplicates": {"type": "integer", "minimum": 0},
+    "auto_delete": {"const": false}
+  },
+  "additionalProperties": false
+}

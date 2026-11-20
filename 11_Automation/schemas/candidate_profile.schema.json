@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://career-os.local/schemas/candidate_profile.schema.json",
+  "title": "Career_OS Candidate Profile v0.1",
+  "type": "object",
+  "required": [
+    "profile_version", "engine_version", "generated_date", "identity", "education", "experience",
+    "projects", "technical_skills", "verified_skills", "languages", "industry_exposure",
+    "functional_exposure", "location_constraints", "career_directions", "seniority_level",
+    "unsupported_prohibited_claims", "resume_variants", "evidence_links", "unknowns"
+  ],
+  "properties": {
+    "profile_version": {"const": "0.1"},
+    "engine_version": {"const": "0.1"},
+    "generated_date": {"type": "string", "format": "date"},
+    "identity": {"type": "object"},
+    "education": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "experience": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "projects": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "technical_skills": {"type": "array", "items": {"type": "object"}},
+    "verified_skills": {"type": "object"},
+    "languages": {"type": "array", "items": {"type": "object"}},
+    "industry_exposure": {"type": "array", "items": {"type": "string"}},
+    "functional_exposure": {"type": "array", "items": {"type": "string"}},
+    "location_constraints": {"type": "object"},
+    "work_authorization_facts": {"type": "object"},
+    "career_directions": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"enum": ["Commercial / Research", "Corporate Finance / Transaction / Advisory", "Markets / FMI / FinTech"]}
+    },
+    "seniority_level": {"type": "object"},
+    "unsupported_prohibited_claims": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "resume_variants": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "version", "docx", "pdf"],
+        "properties": {
+          "name": {"enum": ["COMMERCIAL_PRIMARY", "CF_TRANSACTION_SECONDARY"]},
+          "version": {"const": "Production Base v1.0"},
+          "docx": {"type": "string"},
+          "pdf": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_links": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "unknowns": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

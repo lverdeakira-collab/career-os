@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://career-os.local/schemas/job.schema.json",
+  "title": "Career_OS Canonical Job Schema v0.1",
+  "type": "object",
+  "required": [
+    "Schema_Version", "Job_ID", "Source", "Source_URL", "Company", "Role_Title", "Normalized_Role_Title",
+    "Location", "Country", "Remote_Status", "Employment_Type", "Seniority", "Business_Function", "Industry",
+    "Date_Posted", "Date_Discovered", "Job_Description_Raw", "Job_Description_Clean", "Responsibilities",
+    "Responsibility_Tags", "Required_Qualifications", "Preferred_Qualifications", "Required_Skills",
+    "Preferred_Skills", "Must_Have_Skills", "Required_Experience_Years", "Language_Requirements",
+    "Mandatory_Languages", "Education_Requirements", "Mandatory_Education", "Work_Authorization_Notes",
+    "Sponsorship_Available", "Mandatory_Licenses", "Salary", "Application_Deadline", "Recruiter_Name",
+    "Recruiter_Contact", "Career_Direction", "Primary_Route", "Secondary_Route", "Routing_Confidence",
+    "Recommended_Resume", "Hard_Gate_Status", "Hard_Gate_Reasons", "Fit_Score", "Fit_Score_Breakdown",
+    "Assessment_Confidence", "Top_Matches", "Gaps", "Fit_Explanation", "Decision", "Gap_Count", "Status", "Duplicate_Group",
+    "Duplicate_Canonical_Job_ID", "Notes", "Synthetic_Test"
+  ],
+  "properties": {
+    "Schema_Version": {"const": "0.1"},
+    "Job_ID": {"type": "string", "pattern": "^JOB-[0-9]{8}-[A-Z0-9]+-[A-Z0-9]+-[0-9]{4}$"},
+    "Source": {"type": ["string", "null"]},
+    "Source_URL": {"type": ["string", "null"]},
+    "Company": {"type": "string", "minLength": 1},
+    "Role_Title": {"type": "string", "minLength": 1},
+    "Normalized_Role_Title": {"type": ["string", "null"]},
+    "Location": {"type": ["string", "null"]},
+    "Country": {"type": ["string", "null"]},
+    "Remote_Status": {"type": ["string", "null"], "enum": ["ONSITE", "HYBRID", "REMOTE", "UNKNOWN", null]},
+    "Employment_Type": {"type": ["string", "null"]},
+    "Seniority": {"type": ["string", "null"], "enum": ["Intern", "Graduate", "Entry Level", "Analyst", "Junior Associate", "Associate", "Senior Associate", "Manager", "Senior Manager", "Director", "Executive", null]},
+    "Business_Function": {"type": ["string", "null"]},
+    "Industry": {"type": ["string", "null"]},
+    "Date_Posted": {"type": ["string", "null"], "format": "date"},
+    "Date_Discovered": {"type": "string", "format": "date"},
+    "Job_Description_Raw": {"type": "string"},
+    "Job_Description_Clean": {"type": "string"},
+    "Responsibilities": {"type": "array", "items": {"type": "string"}},
+    "Responsibility_Tags": {"type": "array", "items": {"type": "string"}},
+    "Required_Qualifications": {"type": "array", "items": {"type": "string"}},
+    "Preferred_Qualifications": {"type": "array", "items": {"type": "string"}},
+    "Required_Skills": {"type": "array", "items": {"type": "string"}},
+    "Preferred_Skills": {"type": "array", "items": {"type": "string"}},
+    "Must_Have_Skills": {"type": "array", "items": {"type": "string"}},
+    "Required_Experience_Years": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Backward-compatible minimum or approximate anchor used by the Stage 3 gate; consult Required_Experience_Requirement for exact range/qualifier evidence."
+    },
+    "Required_Experience_Requirement": {
+      "type": ["object", "null"],
+      "description": "Lossless semantic representation of the candidate experience requirement extracted from frozen source evidence.",
+      "required": ["status", "minimum_years", "maximum_years", "open_ended_minimum", "approximate", "source_text"],
+      "properties": {
+        "status": {"enum": ["EXPLICIT", "UNKNOWN"]},
+        "minimum_years": {"type": ["number", "null"], "minimum": 0},
+        "maximum_years": {"type": ["number", "null"], "minimum": 0},
+        "open_ended_minimum": {"type": "boolean"},
+        "approximate": {"type": "boolean"},
+        "source_text": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "cover_letter_requirement": {
+      "enum": ["REQUIRED", "OPTIONAL", "NOT_REQUESTED", "UNKNOWN"],
+      "description": "UNKNOWN is required when the frozen source does not establish whether a cover letter is requested."
+    },
+    "Language_Requirements": {"type": ["string", "null"]},
+    "Mandatory_Languages": {"type": "array", "items": {"type": "string"}},
+    "Education_Requirements": {"type": ["string", "null"]},
+    "Mandatory_Education": {"type": "array", "items": {"type": "string"}},
+    "Work_Authorization_Notes": {"type": ["string", "null"]},
+    "Sponsorship_Available": {"enum": ["YES", "NO", "UNKNOWN", null]},
+    "Mandatory_Licenses": {"type": "array", "items": {"type": "string"}},
+    "Salary": {"type": ["string", "null"]},
+    "Application_Deadline": {"type": ["string", "null"], "format": "date"},
+    "Recruiter_Name": {"type": ["string", "null"]},
+    "Recruiter_Contact": {"type": ["string", "null"]},
+    "Career_Direction": {"$ref": "#/$defs/nullableFunctionalRoute"},
+    "Primary_Route": {"$ref": "#/$defs/nullableFunctionalRoute"},
+    "Secondary_Route": {"$ref": "#/$defs/nullableFunctionalRoute"},
+    "Routing_Confidence": {"enum": ["HIGH", "MEDIUM", "LOW", null]},
+    "Recommended_Resume": {"$ref": "#/$defs/nullableBaseResume"},
+    "Hard_Gate_Status": {"enum": ["PASS", "MANUAL_REVIEW", "FAIL", null]},
+    "Hard_Gate_Reasons": {"type": "array", "items": {"type": "string"}},
+    "Fit_Score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
+    "Fit_Score_Breakdown": {
+      "type": ["object", "null"],
+      "properties": {
+        "Role_Functional_Match": {"type": "integer", "minimum": 0, "maximum": 30},
+        "Experience_Evidence": {"type": "integer", "minimum": 0, "maximum": 25},
+        "Skills_Match": {"type": "integer", "minimum": 0, "maximum": 20},
+        "Industry_Match": {"type": "integer", "minimum": 0, "maximum": 10},
+        "Education_Match": {"type": "integer", "minimum": 0, "maximum": 10},
+        "Practical_Fit": {"type": "integer", "minimum": 0, "maximum": 5}
+      },
+      "required": ["Role_Functional_Match", "Experience_Evidence", "Skills_Match", "Industry_Match", "Education_Match", "Practical_Fit"],
+      "additionalProperties": false
+    },
+    "Assessment_Confidence": {"enum": ["HIGH", "MEDIUM", "LOW", null]},
+    "Top_Matches": {"type": "array", "items": {"type": "string"}},
+    "Gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["Requirement", "Requirement_Type", "Category", "Evidence"],
+        "properties": {
+          "Requirement": {"type": "string"},
+          "Requirement_Type": {"enum": ["MUST_HAVE", "REQUIRED", "PREFERRED", "NICE_TO_HAVE", "RESPONSIBILITY", "LANGUAGE", "LICENSE", "WORK_AUTHORIZATION", "EDUCATION"]},
+          "Category": {"enum": ["MATCHED", "PARTIAL", "MISSING", "UNKNOWN", "NOT_APPLICABLE", "VERIFIED_MATCH", "PARTIAL_MATCH", "TRANSFERABLE"]},
+          "Evidence": {"type": ["string", "null"]},
+          "Evidence_Type": {"type": "string"},
+          "Criticality": {"enum": ["CRITICAL", "NON_CRITICAL"]},
+          "Source": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "Fit_Explanation": {
+      "type": ["object", "null"],
+      "properties": {
+        "Top_Matches": {"type": "array", "items": {"type": "string"}},
+        "Main_Gaps": {"type": "array", "items": {"type": "string"}},
+        "Hard_Gate_Result": {"enum": ["PASS", "MANUAL_REVIEW", "FAIL"]},
+        "Why": {"type": "string"}
+      },
+      "required": ["Top_Matches", "Main_Gaps", "Hard_Gate_Result", "Why"],
+      "additionalProperties": false
+    },
+    "Decision": {"enum": ["PRIORITY_APPLY", "APPLY", "REVIEW", "SKIP", null]},
+    "Gap_Count": {"type": ["integer", "null"], "minimum": 0},
+    "Status": {"enum": ["DISCOVERED", "NORMALIZED", "HARD_GATE_FAILED", "SCORED", "SHORTLISTED", "SKIPPED", "READY_FOR_REVIEW"]},
+    "Duplicate_Group": {"type": ["string", "null"]},
+    "Duplicate_Canonical_Job_ID": {"type": ["string", "null"]},
+    "Notes": {"type": ["string", "null"]},
+    "Synthetic_Test": {"type": "boolean"}
+    ,
+    "Hardening_Version": {"type": ["string", "null"]},
+    "Primary_Resume": {"$ref": "#/$defs/nullableBaseResume"},
+    "Primary_Reason": {"type": ["string", "null"]},
+    "Optional_Secondary_Resume": {"$ref": "#/$defs/nullableBaseResume"},
+    "Secondary_Reason": {"type": ["string", "null"]},
+    "Secondary_Allowed": {"type": ["boolean", "null"]},
+    "Routing_Human_Review_Required": {"type": ["boolean", "null"]},
+    "Base_Selection_Scores": {
+      "type": ["object", "null"],
+      "properties": {
+        "COMMERCIAL_PRIMARY": {"type": "integer", "minimum": 0},
+        "CF_TRANSACTION_SECONDARY": {"type": "integer", "minimum": 0}
+      },
+      "required": ["COMMERCIAL_PRIMARY", "CF_TRANSACTION_SECONDARY"],
+      "additionalProperties": false
+    },
+    "Work_Authorization_Assessment": {"type": ["object", "null"]},
+    "Language_Assessments": {"type": "array", "items": {"type": "object"}},
+    "Employment_Policy_Assessment": {"type": ["object", "null"]},
+    "Location_Assessment": {"type": ["object", "null"]},
+    "Employment_Type_Assessment": {"type": ["object", "null"]},
+    "Circuit_Breaker": {"type": ["object", "null"]},
+    "Prompt_Injection_Signals": {"type": "array", "items": {"type": "object"}}
+  },
+  "$defs": {
+    "nullableFunctionalRoute": {
+      "type": ["string", "null"],
+      "enum": ["Commercial / Research", "Corporate Finance / Transaction / Advisory", "Markets / FMI / FinTech", null]
+    },
+    "nullableBaseResume": {
+      "type": ["string", "null"],
+      "enum": ["COMMERCIAL_PRIMARY", "CF_TRANSACTION_SECONDARY", null]
+    }
+  },
+  "additionalProperties": false
+}

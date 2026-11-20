@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://career-os.local/schemas/candidate_strategy.schema.json",
+  "title": "Career_OS Candidate Strategy v1.0",
+  "type": "object",
+  "required": [
+    "strategy_version", "engine_version", "last_updated", "candidate_truth_path",
+    "personal_salary_floor_sgd", "preferred_locations", "target_role_families",
+    "preferred_employment_types", "contract_duration_preferences", "hard_disqualifiers",
+    "human_required_topics", "willingness_to_relocate", "career_direction_preferences", "notes"
+  ],
+  "properties": {
+    "strategy_version": {"const": "1.0"},
+    "engine_version": {"const": "1.0"},
+    "last_updated": {"type": "string", "format": "date"},
+    "candidate_truth_path": {"const": "15_Application_Engine/candidate_profile.json"},
+    "personal_salary_floor_sgd": {"type": ["number", "null"], "minimum": 0},
+    "preferred_locations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "target_role_families": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "preferred_employment_types": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "contract_duration_preferences": {"type": ["object", "string", "null"]},
+    "hard_disqualifiers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "human_required_topics": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "willingness_to_relocate": {"type": ["boolean", "null"]},
+    "career_direction_preferences": {
+      "type": "array",
+      "items": {"enum": ["Commercial / Research", "Corporate Finance / Transaction / Advisory", "Markets / FMI / FinTech"]},
+      "uniqueItems": true
+    },
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

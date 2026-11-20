@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Career_OS Discovery Run v0.1",
+  "type": "object",
+  "required": [
+    "schema_version", "run_id", "start_time", "end_time", "run_status", "source_connectors_implemented",
+    "source_connector_types_successful", "sources_attempted", "sources_successful", "sources_failed",
+    "jobs_discovered_raw", "jobs_normalized", "duplicates_detected", "possible_duplicates",
+    "new_unique_jobs", "unique_vacancies", "errors", "warnings", "candidate_profile_unchanged",
+    "application_ids_created", "applications_submitted"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "run_id": {"type": "string", "pattern": "^DISCOVERY-[0-9]{8}-[0-9]{6}$"},
+    "start_time": {"type": "string"},
+    "end_time": {"type": "string"},
+    "run_status": {"enum": ["SUCCESS", "PARTIAL_SUCCESS", "BLOCKED"]},
+    "source_connectors_implemented": {"type": "array", "items": {"enum": ["lever", "greenhouse", "ashby"]}},
+    "source_connector_types_successful": {"type": "array", "items": {"enum": ["lever", "greenhouse", "ashby"]}},
+    "sources_attempted": {"type": "array", "items": {"type": "object"}},
+    "sources_successful": {"type": "integer", "minimum": 0},
+    "sources_failed": {"type": "integer", "minimum": 0},
+    "jobs_discovered_raw": {"type": "integer", "minimum": 0},
+    "jobs_normalized": {"type": "integer", "minimum": 0},
+    "duplicates_detected": {"type": "integer", "minimum": 0},
+    "possible_duplicates": {"type": "integer", "minimum": 0},
+    "new_unique_jobs": {"type": "integer", "minimum": 0},
+    "unique_vacancies": {"type": "integer", "minimum": 0},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "candidate_profile_unchanged": {"type": "boolean"},
+    "application_ids_created": {"const": 0},
+    "applications_submitted": {"const": 0}
+  },
+  "additionalProperties": false
+}

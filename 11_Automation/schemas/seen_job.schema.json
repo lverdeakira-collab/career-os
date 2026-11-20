@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Career_OS Seen Job Memory v0.1",
+  "type": "object",
+  "required": ["schema_version", "job_id", "company", "role_title", "location", "first_seen_at", "last_seen_at", "times_seen", "active_status", "latest_source_urls", "latest_posting_status", "source_identity_keys", "requisition_ids", "vacancy_fingerprints", "last_run_id"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "job_id": {"type": "string", "pattern": "^JOB-[0-9]{8}-[A-Z0-9]+-[A-Z0-9]+-[0-9]{4}$"},
+    "company": {"type": "string"},
+    "role_title": {"type": "string"},
+    "location": {"type": ["string", "null"]},
+    "first_seen_at": {"type": "string"},
+    "last_seen_at": {"type": "string"},
+    "times_seen": {"type": "integer", "minimum": 1},
+    "active_status": {"enum": ["ACTIVE", "CLOSED", "REMOVED", "UNKNOWN"]},
+    "latest_source_urls": {"type": "array", "items": {"type": "string"}},
+    "latest_posting_status": {"enum": ["ACTIVE", "CLOSED", "REMOVED", "UNKNOWN"]},
+    "source_identity_keys": {"type": "array", "items": {"type": "string"}},
+    "requisition_ids": {"type": "array", "items": {"type": "string"}},
+    "vacancy_fingerprints": {"type": "array", "items": {"type": "string"}},
+    "last_run_id": {"type": "string"}
+  },
+  "additionalProperties": false
+}

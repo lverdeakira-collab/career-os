@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Career_OS Job Provenance v0.1",
+  "type": "object",
+  "required": ["schema_version", "job_id", "normalization_status", "field_provenance", "run_id", "discovery_status", "vacancy_status", "primary_source", "source_records", "source_urls", "application_urls", "requisition_ids", "deduplication_confidence", "job_id_reused_from_seen_memory"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "job_id": {"type": "string"},
+    "normalization_status": {"const": "SUCCESS"},
+    "field_provenance": {"type": "object"},
+    "run_id": {"type": "string"},
+    "discovery_status": {"const": "READY_FOR_EVALUATION"},
+    "vacancy_status": {"enum": ["ACTIVE", "CLOSED", "REMOVED", "UNKNOWN"]},
+    "primary_source": {"type": "string"},
+    "source_records": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "source_urls": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "application_urls": {"type": "array", "items": {"type": "string"}},
+    "requisition_ids": {"type": "array", "items": {"type": "string"}},
+    "deduplication_confidence": {"enum": ["EXACT_DUPLICATE", "HIGH_CONFIDENCE_DUPLICATE", "POSSIBLE_DUPLICATE", "DISTINCT"]},
+    "job_id_reused_from_seen_memory": {"type": "boolean"}
+  },
+  "additionalProperties": false
+}
