@@ -4,30 +4,191 @@
   "title": "Career_OS Candidate Strategy v1.0",
   "type": "object",
   "required": [
-    "strategy_version", "engine_version", "last_updated", "candidate_truth_path",
-    "personal_salary_floor_sgd", "preferred_locations", "target_role_families",
-    "preferred_employment_types", "contract_duration_preferences", "hard_disqualifiers",
-    "human_required_topics", "willingness_to_relocate", "career_direction_preferences", "notes"
+    "strategy_version",
+    "engine_version",
+    "last_updated",
+    "candidate_truth_path",
+    "salary_floor",
+    "preferred_locations",
+    "target_role_families",
+    "preferred_employment_types",
+    "contract_duration_preferences",
+    "hard_disqualifiers",
+    "human_required_topics",
+    "willingness_to_relocate",
+    "career_direction_preferences",
+    "notes",
+    "eligibility_preferences"
   ],
   "properties": {
-    "strategy_version": {"const": "1.0"},
-    "engine_version": {"const": "1.0"},
-    "last_updated": {"type": "string", "format": "date"},
-    "candidate_truth_path": {"const": "15_Application_Engine/candidate_profile.json"},
-    "personal_salary_floor_sgd": {"type": ["number", "null"], "minimum": 0},
-    "preferred_locations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "target_role_families": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "preferred_employment_types": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "contract_duration_preferences": {"type": ["object", "string", "null"]},
-    "hard_disqualifiers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "human_required_topics": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-    "willingness_to_relocate": {"type": ["boolean", "null"]},
-    "career_direction_preferences": {
+    "strategy_version": {
+      "const": "1.0"
+    },
+    "engine_version": {
+      "const": "1.0"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "candidate_truth_path": {
+      "const": "15_Application_Engine/candidate_profile.json"
+    },
+    "salary_floor": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Optional personal minimum salary. Informational only; never treated as a legal threshold.",
+      "properties": {
+        "amount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "period": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "monthly",
+            "annual",
+            null
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferred_locations": {
       "type": "array",
-      "items": {"enum": ["Commercial / Research", "Corporate Finance / Transaction / Advisory", "Markets / FMI / FinTech"]},
+      "items": {
+        "type": "string"
+      },
       "uniqueItems": true
     },
-    "notes": {"type": "array", "items": {"type": "string"}}
+    "target_role_families": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "preferred_employment_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "contract_duration_preferences": {
+      "type": [
+        "object",
+        "string",
+        "null"
+      ]
+    },
+    "hard_disqualifiers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "human_required_topics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "willingness_to_relocate": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "career_direction_preferences": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "Commercial / Research",
+          "Corporate Finance / Transaction / Advisory",
+          "Markets / FMI / FinTech"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "eligibility_preferences": {
+      "type": "object",
+      "description": "How each kind of posting restriction is handled. SKIP is applied only when the candidate's own facts confirm the gap; otherwise it is softened to REVIEW.",
+      "properties": {
+        "citizen_or_resident_only": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "no_sponsorship": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "unrestricted_work_rights_required": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "local_candidates_preferred": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "work_authorization_not_stated": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "required_language_missing": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        },
+        "required_language_unverified": {
+          "enum": [
+            "SKIP",
+            "REVIEW",
+            "IGNORE"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }

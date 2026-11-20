@@ -153,7 +153,6 @@
     },
     "Work_Authorization_Assessment": {"type": ["object", "null"]},
     "Language_Assessments": {"type": "array", "items": {"type": "object"}},
-    "Employment_Policy_Assessment": {"type": ["object", "null"]},
     "Location_Assessment": {"type": ["object", "null"]},
     "Employment_Type_Assessment": {"type": ["object", "null"]},
     "Circuit_Breaker": {"type": ["object", "null"]},
