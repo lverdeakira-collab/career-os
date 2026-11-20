@@ -1,8 +1,10 @@
 # Career OS
 
-**A privacy-first, rule-driven job-search engine for early-career candidates — configurable for any country.**
+**A privacy-first, rule-driven job-search pipeline for early-career candidates.** Country rules are user-configured; the shipped role and scoring configuration targets business and finance roles.
 
-Career OS turns a job search into an auditable pipeline: discover roles from public applicant-tracking systems, normalize them into one schema, apply eligibility gates that the candidate configures for their own situation, score fit with a transparent 100-point model, route each role to the right base resume, and stop at a human checkpoint before anything is submitted.
+![tests](https://github.com/lverdeakira-collab/career-os/actions/workflows/tests.yml/badge.svg)
+
+Career OS turns a job search into a traceable pipeline: discover roles from public applicant-tracking systems, normalize them into one schema, apply eligibility gates that the candidate configures for their own situation, score fit with a transparent 100-point model, route each role to the right base resume, and stop at a human checkpoint before anything is submitted.
 
 The core design principle: **JSON/CSV records are truth, deterministic Python enforces rules, and a language model only handles bounded semantic judgments.** An LLM may classify evidence; it may not assign weights, compute the final score, change decision bands, or bypass overrides.
 
@@ -15,8 +17,8 @@ The core design principle: **JSON/CSV records are truth, deterministic Python en
 ```
 Public ATS boards ──► Discovery ──► Normalization ──► Hard gates ──► Gap analysis ──► Fit score ──► Resume routing ──► Human review
  (Greenhouse,          raw capture,   canonical job     seniority,     MISSING vs        6-component    2 frozen base       nothing is
-  Lever, Ashby)        dedup, seen-   schema, title     location,      UNKNOWN,          100-pt model,  resumes, deter-     submitted
-                       job memory     aliases           user-chosen    circuit breaker   decision band  ministic rules      automatically
+  Lever, Ashby)        dedup, seen-   schema, title     location,      UNKNOWN vs        100-pt model,  resumes, deter-     submitted
+                       job memory     aliases           user-chosen    confirmed gap     decision band  ministic rules      automatically
                                                         eligibility
 ```
 
@@ -26,10 +28,10 @@ Public ATS boards ──► Discovery ──► Normalization ──► Hard gat
 | Normalization | `11_Automation/job_normalization/` | Maps every posting to one canonical job schema; title-alias table |
 | Hard gates | `11_Automation/hard_filters/` | Seniority, location/employment type, experience-requirement semantics, mandatory education/licences |
 | Eligibility rules | `11_Automation/eligibility/` | Detects citizen/resident-only, no-sponsorship, right-to-work and language requirements in a posting. **No country's rules are hard-coded**: the candidate states their own facts and chooses `SKIP` / `REVIEW` / `IGNORE` for each restriction |
-| Gap analysis | `11_Automation/gap_analysis/` | Distinguishes *confirmed missing* from *unknown*; a critical-requirement circuit breaker forces SKIP only on confirmed gaps |
-| Fit scoring | `11_Automation/fit_scoring/` | Role/function 30 · experience 25 · skills 20 · industry 10 · education 10 · practical fit 5 → `PRIORITY_APPLY` / `APPLY` / `REVIEW` / `SKIP` |
+| Gap analysis | `11_Automation/gap_analysis/` | Classifies each requirement as matched, partial, unknown (not evidenced) or missing (confirmed absent). Only a confirmed-missing critical requirement forces SKIP; unknowns earn partial score credit |
+| Fit scoring | `11_Automation/fit_scoring/` | Role/function 30 · experience 25 · skills 20 · industry 10 · education 10 · practical fit 5 → `PRIORITY_APPLY` / `APPLY` / `REVIEW` / `SKIP`. Every number lives in `weights.json` |
 | Resume routing | `11_Automation/resume_router/`, `routing/` | Deterministic choice between two frozen base resumes across three functional routes; vacancy verification |
-| QA | `11_Automation/qa/` | JSON-schema validation, duplicate detection, and **untrusted-input detection** — job descriptions are treated as untrusted data and cannot change rules or trigger actions |
+| QA | `11_Automation/qa/` | JSON-schema validation, duplicate detection, and a heuristic flag for instruction-like text in job descriptions (English and Chinese patterns; flags only, see limitations) |
 
 ### Safety boundaries
 
@@ -49,13 +51,14 @@ Public ATS boards ──► Discovery ──► Normalization ──► Hard gat
 │   ├── job_normalization/      # canonical job schema mapping
 │   ├── hard_filters/           # eligibility gates
 │   ├── eligibility/            # user-configurable work-authorization & language rules
-│   ├── gap_analysis/           # gap classification + circuit breaker
+│   ├── gap_analysis/           # requirement matching, skill aliases
 │   ├── fit_scoring/            # 100-point model and weights
 │   ├── resume_router/ routing/ # base-resume routing and vacancy checks
 │   ├── qa/                     # schema validation, duplicates, untrusted input
 │   ├── schemas/                # JSON Schemas for every record type
-│   └── validation/             # runnable test suites
+│   └── validation/             # scenario test scripts
 ├── 15_Application_Engine/      # orchestration, rule docs, synthetic profile & test jobs
+├── tests/                      # unit tests (unittest / pytest)
 ├── .agents/skills/             # thin-pointer agent skills (Codex-style) for each stage
 ├── skills/career-application-ops/  # portable, tool-agnostic workflow skill
 ├── templates/                  # blank knowledge-base templates (experience, project, STAR…)
@@ -133,9 +136,20 @@ Career OS does not assume any country, visa type or government rule. Set your ow
 
 ---
 
-## Status
+## Status and limitations
 
-Discovery, normalization, gating, scoring and routing are implemented and tested. Application-type detection, automated tailoring and form completion are intentionally out of scope for this engine; those steps stay human-reviewed.
+This is an early-stage project (v1.1) built for one person's job search and then generalised. It is useful as a working reference for rule-first, LLM-bounded automation; treat it as a prototype, not a finished product.
+
+**Tested**
+- `bash scripts/run_tests.sh` runs four scenario suites, 21 unit tests, a dry run of 12 synthetic jobs checked field by field against `expected_outcomes.json`, and JSON-schema validation of every result. CI runs the same on Python 3.10–3.13.
+- The synthetic jobs cover every decision path: `PRIORITY_APPLY`, `APPLY`, `REVIEW` from the score band, `REVIEW` from a gate, and `SKIP` from a gate.
+
+**Known limitations**
+- **Domain.** Country rules are neutral and user-configured, but the functional routes, the two base-resume slots, skill aliases, and the industry/education keywords in `weights.json` are set up for business and finance roles. Other fields need those files edited; routes and resume slots are also referenced in `common.py` and the profile schema.
+- **Matching is lexical.** Skills match by exact name, alias, or a verified skill named inside the requirement. There is no semantic matching, so a skill phrased very differently scores as unknown (partial credit) until you add an alias.
+- **Injection flagging is a heuristic.** It catches common phrasings in English and Chinese and only labels them. Protection comes from the design (nothing here acts on job text), not from the detector. Any agent you connect must treat job text as data.
+- **Discovery** supports Greenhouse, Lever and Ashby public APIs only, with simple retry and rate limiting.
+- **Folder names** (`11_`, `15_`) are kept from the original personal knowledge base layout.
 
 ## License
 

@@ -1,0 +1,22 @@
+[project]
+name = "career-os"
+version = "1.1.0"
+description = "Rule-driven job-search pipeline: ATS discovery, configurable eligibility, transparent fit scoring and resume routing, with a human checkpoint before any application."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# Scripts are run from the repository; nothing is installed as a package.
+py-modules = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
