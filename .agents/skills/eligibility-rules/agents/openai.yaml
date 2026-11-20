@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eligibility Rules"
+  short_description: "Apply the candidate's own eligibility choices"
+  default_prompt: "Use $eligibility-rules to assess work-authorization and language restrictions against the candidate's facts and eligibility preferences."
