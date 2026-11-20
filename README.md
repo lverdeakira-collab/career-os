@@ -77,10 +77,22 @@ python3 15_Application_Engine/run_dry_run.py \
   --output /tmp/career_os_dry_run.json
 
 # Run the test suites
-./scripts/run_tests.sh
+bash scripts/run_tests.sh
 ```
 
 Each result contains the hard-gate status and reasons, the eligibility assessment, the gap matrix, the score breakdown, the decision band and the routed base resume.
+
+### Discover jobs from public ATS boards
+
+List the Greenhouse, Lever or Ashby boards you want to monitor in `11_Automation/job_discovery/discovery_sources.json` (a board is the company slug in the public job-board URL), then:
+
+```bash
+python3 11_Automation/job_discovery/run_discovery.py \
+  --career-os-root . \
+  --output-root ./private/run_output
+```
+
+Raw postings, normalized jobs, deduplication logs and a run log are written under `--output-root` (git-ignored when it is inside `private/`). Normalized jobs can then be scored with `run_dry_run.py`.
 
 To use it for a real search, copy `15_Application_Engine/candidate_profile.json` and `candidate_strategy.json` into a **private** location, fill them with your own verified facts, and pass them with `--profile` / `--strategy`. Never commit them.
 
