@@ -4,7 +4,11 @@ from datetime import datetime, timezone
 import re
 
 
-COUNTRY_CODES = {'SG': 'Singapore', 'CN': 'China', 'HK': 'Hong Kong', 'MY': 'Malaysia', 'US': 'United States'}
+COUNTRY_CODES = {
+    'AU': 'Australia', 'CA': 'Canada', 'CN': 'China', 'DE': 'Germany', 'FR': 'France', 'GB': 'United Kingdom',
+    'HK': 'Hong Kong', 'IE': 'Ireland', 'IN': 'India', 'JP': 'Japan', 'KR': 'Korea', 'MY': 'Malaysia',
+    'NL': 'Netherlands', 'SG': 'Singapore', 'TH': 'Thailand', 'TW': 'Taiwan', 'US': 'United States',
+}
 SKILL_PATTERNS = {
     'Microsoft Excel': [r'\bexcel\b'],
     'Microsoft PowerPoint': [r'\bpowerpoint\b'],
@@ -41,7 +45,7 @@ def _country(raw: dict) -> str | None:
     if code in COUNTRY_CODES:
         return COUNTRY_CODES[code]
     location = (raw.get('location_raw') or '').lower()
-    for country in ['Singapore', 'China', 'Hong Kong', 'Malaysia', 'United States', 'Japan', 'Thailand']:
+    for country in sorted(set(COUNTRY_CODES.values()), key=len, reverse=True):
         if country.lower() in location:
             return country
     address = ((raw.get('source_metadata') or {}).get('address') or {}).get('postalAddress') or {}

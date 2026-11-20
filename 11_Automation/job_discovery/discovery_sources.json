@@ -1,10 +1,9 @@
 {
   "version": "0.1",
+  "timezone": "UTC",
   "discovery_scope": {
-    "countries": [
-      "Singapore"
-    ],
-    "purpose": "Example configuration. Replace boards with public ATS boards you want to monitor.",
+    "countries": [],
+    "purpose": "Example configuration. List the countries you want to search and the public ATS boards you want to monitor.",
     "candidate_preference_inference": false,
     "maximum_unique_jobs": 20
   },

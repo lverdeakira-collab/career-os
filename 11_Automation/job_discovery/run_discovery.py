@@ -66,7 +66,8 @@ def main() -> None:
     career_root = Path(args.career_os_root)
     output_root = Path(args.output_root)
     config = load_json(Path(args.config))
-    now = datetime.now(ZoneInfo('Asia/Singapore'))
+    timezone_name = config.get('timezone') or 'UTC'
+    now = datetime.now(ZoneInfo(timezone_name))
     run_id = args.run_id or now.strftime('DISCOVERY-%Y%m%d-%H%M%S')
     started_at = now.isoformat(timespec='seconds')
     discovered_date = now.date().isoformat()
@@ -263,7 +264,7 @@ def main() -> None:
     dump_json(dedup_dir / f'{run_id}_deduplication_log.json', dedup_record)
     dump_json(run_dir / 'job_index_rows.json', job_index_rows)
 
-    ended_at = datetime.now(ZoneInfo('Asia/Singapore')).isoformat(timespec='seconds')
+    ended_at = datetime.now(ZoneInfo(timezone_name)).isoformat(timespec='seconds')
     source_failures = sum(attempt['status'] != 'SUCCESS' for attempt in source_attempts)
     run_log = {
         'schema_version': '0.1',
