@@ -28,7 +28,11 @@ This is a Career_OS decision rule, not a candidate fact.
 
 ## Mandatory-language policy
 
-English and Chinese are verified as listed languages; proficiency levels are unknown. A clear mandatory unsupported language fails. An ambiguous language or proficiency requirement requires manual review.
+Languages are read only from the Candidate Profile. What happens when a required language is confirmed missing (`required_language_missing`) or cannot be verified (`required_language_unverified`) is the candidate's choice in `eligibility_preferences`: `SKIP`, `REVIEW` or `IGNORE`. Preferred languages never fail the gate.
+
+## Work-authorization policy
+
+No country's immigration or labour rules are built in. The candidate lists the countries where they are authorized, are a citizen/permanent resident, or would need sponsorship, and chooses an action for each restriction type (`citizen_or_resident_only`, `no_sponsorship`, `unrestricted_work_rights_required`, `local_candidates_preferred`, `work_authorization_not_stated`). `SKIP` becomes `FAIL` only when the candidate's facts confirm the gap; otherwise it is softened to `MANUAL_REVIEW`. See `11_Automation/eligibility/README.md`.
 
 ## Mandatory technical/license policy
 

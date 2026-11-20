@@ -1,11 +1,11 @@
 {
   "registry_version": "1.1",
-  "engine_status": "STAGE 3 HARDENED v1.0 + TWO-BASE ROUTER MIGRATION",
+  "engine_status": "Engine v1.1 \u2014 user-configurable eligibility",
   "candidate_truth": "15_Application_Engine/candidate_profile.json",
   "candidate_truth_schema": "11_Automation/schemas/candidate_profile.schema.json",
   "candidate_strategy": "15_Application_Engine/candidate_strategy.json",
   "candidate_strategy_schema": "11_Automation/schemas/candidate_strategy.schema.json",
-  "singapore_policy_package": "11_Automation/policy/singapore/",
+  "eligibility_rules": "11_Automation/eligibility/",
   "gap_semantics": "11_Automation/gap_analysis/gap_categories.json",
   "critical_requirement_rules": "11_Automation/hard_filters/rules.json",
   "fit_scoring": "11_Automation/fit_scoring/weights.json",

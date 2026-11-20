@@ -13,7 +13,7 @@
   "education": [
     {
       "institution": "Example University",
-      "location": "Singapore",
+      "location": "Example City",
       "degree": "Master of Science in Finance (synthetic)",
       "start_date": "2025-01",
       "end_date": "2026-08",
@@ -141,19 +141,20 @@
   ],
   "location_constraints": {
     "work_authorization_countries": [],
-    "current_location": "Singapore",
+    "current_location": "Example City",
     "target_locations": [],
     "remote_preference": null,
     "relocation_preference": null,
-    "sponsorship_requirement": "SYNTHETIC: assume an employer-sponsored work pass is required.",
+    "sponsorship_requirement": "SYNTHETIC: the candidate would need employer sponsorship outside the countries listed in work_authorization_facts.",
     "evidence": "SYNTHETIC"
   },
   "work_authorization_facts": {
-    "singapore_status": "NOT_CITIZEN_OR_PR",
-    "requires_sponsorship_for_singapore": true,
-    "unrestricted_work_authorization_countries": [],
-    "confirmed_no_work_authorization_countries": [],
-    "evidence": "SYNTHETIC"
+    "authorized_countries": [],
+    "citizen_or_resident_countries": [],
+    "requires_sponsorship_countries": [
+      "Exampleland"
+    ],
+    "evidence": "SYNTHETIC \u2014 list the countries where you can already work, hold citizenship/permanent residency, or would need sponsorship."
   },
   "career_directions": [
     "Commercial / Research",

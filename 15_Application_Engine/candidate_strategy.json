@@ -3,9 +3,13 @@
   "engine_version": "1.0",
   "last_updated": "2026-01-01",
   "candidate_truth_path": "15_Application_Engine/candidate_profile.json",
-  "personal_salary_floor_sgd": null,
+  "salary_floor": {
+    "amount": null,
+    "currency": null,
+    "period": null
+  },
   "preferred_locations": [
-    "Singapore"
+    "Exampleland"
   ],
   "target_role_families": [],
   "preferred_employment_types": [
@@ -17,13 +21,12 @@
     "notes": "SYNTHETIC example."
   },
   "hard_disqualifiers": [
-    "Title contains 'Senior' (SDM = Senior/Director/Manager-level roles, excluded)",
-    "Title contains 'Director' (SDM = Senior/Director/Manager-level roles, excluded)",
-    "Title contains 'Manager' (SDM = Senior/Director/Manager-level roles, excluded)"
+    "Title contains 'Senior'",
+    "Title contains 'Director'",
+    "Title contains 'Manager'"
   ],
   "human_required_topics": [
-    "work authorization or sponsorship when the job text is ambiguous",
-    "employment-pass feasibility when employer-side COMPASS evidence is unavailable",
+    "work authorization or sponsorship when the posting is ambiguous",
     "salary expectations",
     "relocation"
   ],
@@ -35,6 +38,15 @@
   ],
   "notes": [
     "SYNTHETIC example strategy. Replace with your own preferences in a private copy.",
-    "personal_salary_floor_sgd must never be substituted for an MOM qualifying-salary threshold."
-  ]
+    "eligibility_preferences decides how posting restrictions are handled: SKIP, REVIEW or IGNORE. Change them to match your own situation."
+  ],
+  "eligibility_preferences": {
+    "citizen_or_resident_only": "REVIEW",
+    "no_sponsorship": "REVIEW",
+    "unrestricted_work_rights_required": "REVIEW",
+    "local_candidates_preferred": "IGNORE",
+    "work_authorization_not_stated": "REVIEW",
+    "required_language_missing": "SKIP",
+    "required_language_unverified": "REVIEW"
+  }
 }
