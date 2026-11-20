@@ -1,0 +1,4 @@
+interface:
+  display_name: "Resume Routing"
+  short_description: "Route jobs to frozen Base Resumes"
+  default_prompt: "Use $resume-routing to select one primary and an optional secondary frozen Career_OS Base Resume."
