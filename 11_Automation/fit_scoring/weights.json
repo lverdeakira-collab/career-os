@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "authority": "Career_OS deterministic Fit Score",
+  "version": "1.1",
+  "authority": "Single source of truth for every number used by fit_scoring/score_job.py.",
   "total": 100,
   "components": {
     "Role_Functional_Match": 30,
@@ -11,16 +11,115 @@
     "Practical_Fit": 5
   },
   "decision_bands": [
-    {"minimum": 85, "maximum": 100, "decision": "PRIORITY_APPLY"},
-    {"minimum": 75, "maximum": 84, "decision": "APPLY"},
-    {"minimum": 65, "maximum": 74, "decision": "REVIEW"},
-    {"minimum": 0, "maximum": 64, "decision": "SKIP"}
+    {
+      "minimum": 85,
+      "maximum": 100,
+      "decision": "PRIORITY_APPLY"
+    },
+    {
+      "minimum": 75,
+      "maximum": 84,
+      "decision": "APPLY"
+    },
+    {
+      "minimum": 65,
+      "maximum": 74,
+      "decision": "REVIEW"
+    },
+    {
+      "minimum": 0,
+      "maximum": 64,
+      "decision": "SKIP"
+    }
   ],
   "overrides": {
     "Critical_Circuit_Breaker": "SKIP and HARD_GATE_FAILED",
     "Hard_Gate_FAIL": "SKIP and HARD_GATE_FAILED",
     "Hard_Gate_MANUAL_REVIEW": "REVIEW and READY_FOR_REVIEW"
   },
-  "score_cap_policy": "No numeric score cap existed in v0.1 and none is introduced. Confirmed critical MISSING uses a decision override; the numerical evidence score remains auditable.",
-  "llm_boundary": "An LLM may classify semantic evidence but may not assign weights, compute the final score, change bands, or bypass overrides."
+  "score_cap_policy": "No numeric cap. A confirmed critical MISSING requirement forces SKIP through the decision override; the numeric score stays auditable.",
+  "llm_boundary": "An LLM may classify semantic evidence but may not assign weights, compute the final score, change bands, or bypass overrides.",
+  "evidence_values": {
+    "_note": "Credit per requirement by evidence category. UNKNOWN (not evidenced either way) earns partial credit; MISSING (confirmed absent) earns none.",
+    "MATCHED": 1.0,
+    "PARTIAL_RELATED": 0.75,
+    "PARTIAL": 0.65,
+    "PARTIAL_TRANSFERABLE": 0.55,
+    "UNKNOWN": 0.25,
+    "MISSING": 0.0
+  },
+  "empty_section_credit": {
+    "_note": "Credit when a posting lists nothing for a section (absence is neutral, not punitive).",
+    "experience": 0.4,
+    "required_skills": 0.5,
+    "preferred_skills": 1.0
+  },
+  "skills_split": {
+    "required": 14,
+    "preferred": 6
+  },
+  "role_points": {
+    "has_primary_route": 10,
+    "function_strong": 10,
+    "function_medium": 7,
+    "function_weak": 3,
+    "function_strong_threshold": 12,
+    "function_medium_threshold": 7,
+    "seniority_target": 6,
+    "seniority_selective": 3,
+    "responsibilities_two_plus": 4,
+    "responsibilities_one": 2
+  },
+  "target_seniority": {
+    "target": [
+      "Intern",
+      "Graduate",
+      "Entry Level",
+      "Analyst",
+      "Junior Associate"
+    ],
+    "selective": [
+      "Associate"
+    ]
+  },
+  "industry_points": {
+    "_note": "Domain keywords below are the shipped business/finance configuration; edit them for other fields.",
+    "not_stated": 5,
+    "matches_candidate_exposure": 10,
+    "related_domain": 6,
+    "other": 3,
+    "related_domain_keywords": [
+      "finance",
+      "bank",
+      "investment",
+      "consumer",
+      "technology",
+      "consulting"
+    ]
+  },
+  "education_points": {
+    "not_stated": 6,
+    "aligned_field": 10,
+    "degree_any_field": 8,
+    "other": 4,
+    "aligned_field_keywords": [
+      "finance",
+      "economics",
+      "business",
+      "commerce",
+      "quantitative"
+    ],
+    "degree_keywords": [
+      "bachelor",
+      "degree",
+      "master"
+    ]
+  },
+  "practical_points": {
+    "location_match": 2,
+    "location_unknown": 1,
+    "seniority_target": 2,
+    "seniority_selective": 1,
+    "has_primary_route": 1
+  }
 }
