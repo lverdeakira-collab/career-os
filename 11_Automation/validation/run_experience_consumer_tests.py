@@ -43,7 +43,7 @@ def job(requirement: dict | None, scalar: float | None, *, jd: str = '') -> dict
         'Company': 'Synthetic Test',
         'Role_Title': 'Business Analyst',
         'Seniority': 'Analyst',
-        'Country': 'Singapore',
+        'Country': 'Exampleland',
         'Required_Experience_Years': scalar,
         'Required_Experience_Requirement': requirement,
         'Job_Description_Clean': jd,
@@ -53,7 +53,7 @@ def job(requirement: dict | None, scalar: float | None, *, jd: str = '') -> dict
 
 
 PROFILE = {
-    'location_constraints': {'work_authorization_countries': ['Singapore']},
+    'location_constraints': {'work_authorization_countries': ['Exampleland']},
     'work_authorization_facts': {},
 }
 WORK_AUTHORIZATION = {
@@ -71,7 +71,6 @@ def hard_gate(value: dict) -> dict:
         [],
         work_authorization=WORK_AUTHORIZATION,
         language_assessments=[],
-        employment_policy=None,
     )
 
 

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Targeted tests for the location + employment-type Hard Gate patch (2026-09-03).
+"""Targeted tests for the location + employment-type Hard Gate.
 
-Uses the REAL candidate_strategy.json (preferred_locations, preferred_employment_types)
-so these tests exercise the actual configured candidate constraints, not a
-synthetic strategy. Job fixtures are synthetic (isolated per dimension), per the
-patch instruction.
+Uses the bundled candidate_strategy.json (preferred_locations, preferred_employment_types)
+so these tests exercise the configured candidate constraints. Job fixtures are
+synthetic and isolated per dimension.
 
 Covers:
-  LOCATION:    A (Singapore PASS), B (overseas FAIL), C (missing MANUAL_REVIEW),
+  LOCATION:    A (preferred-country PASS), B (overseas FAIL), C (missing MANUAL_REVIEW),
                D (multi-country/regional MANUAL_REVIEW)
   EMPLOYMENT:  E (Full-time Permanent PASS), F (Full-time Contract PASS),
                G (Part-time FAIL), H (Internship FAIL), I (unstated MANUAL_REVIEW)
@@ -31,8 +30,7 @@ from hard_filters.location_employment_gates import (  # noqa: E402
     evaluate_employment_type_gate,
     evaluate_location_gate,
 )
-from policy.singapore.language_classifier import classify_language_requirements  # noqa: E402
-from policy.singapore.work_authorization import classify_work_authorization  # noqa: E402
+from eligibility import classify_language_requirements, classify_work_authorization  # noqa: E402
 
 
 def load_json(path: Path):
@@ -60,13 +58,12 @@ def job(country: str | None, location: str | None, employment_type: str | None, 
 
 
 def full_gate(profile: dict, strategy: dict, posting: dict) -> dict:
-    work_authorization = classify_work_authorization(posting, profile)
-    language_assessments = classify_language_requirements(posting, profile)
+    work_authorization = classify_work_authorization(posting, profile, strategy)
+    language_assessments = classify_language_requirements(posting, profile, strategy)
     return evaluate_hard_gates(
         posting, profile, [],
         work_authorization=work_authorization,
         language_assessments=language_assessments,
-        employment_policy=None,
         strategy=strategy,
     )
 
@@ -85,8 +82,8 @@ def main() -> None:
         checks.append({'test': test_id, 'status': 'PASS' if condition else 'FAIL', 'evidence': evidence})
 
     # --- LOCATION ---
-    loc_a = evaluate_location_gate(job('Singapore', 'Singapore', 'Full-time'), strategy)
-    check('A_singapore_role_passes', loc_a['Location_Gate_Status'] == 'PASS', loc_a)
+    loc_a = evaluate_location_gate(job('Exampleland', 'Example City', 'Full-time'), strategy)
+    check('A_preferred_country_role_passes', loc_a['Location_Gate_Status'] == 'PASS', loc_a)
 
     loc_b = evaluate_location_gate(job('China', 'Shanghai, China', 'Full-time'), strategy)
     check(
@@ -98,14 +95,14 @@ def main() -> None:
     loc_c = evaluate_location_gate(job(None, None, 'Full-time'), strategy)
     check('C_missing_location_manual_review', loc_c['Location_Gate_Status'] == 'MANUAL_REVIEW', loc_c)
 
-    loc_d = evaluate_location_gate(job('Singapore', 'Singapore / Hong Kong', 'Full-time'), strategy)
+    loc_d = evaluate_location_gate(job('Exampleland', 'Example City / Hong Kong', 'Full-time'), strategy)
     check(
         'D_multi_country_regional_not_auto_pass',
         loc_d['Location_Gate_Status'] == 'MANUAL_REVIEW',
         loc_d,
     )
     loc_d2 = evaluate_location_gate(
-        job('Singapore', 'Singapore, Singapore', 'Full-time', role_title='Management Associate Program – SEA Regional Track'),
+        job('Exampleland', 'Example City, Exampleland', 'Full-time', role_title='Management Associate Program – SEA Regional Track'),
         strategy,
     )
     check(
@@ -115,23 +112,23 @@ def main() -> None:
     )
 
     # --- EMPLOYMENT TYPE ---
-    emp_e = evaluate_employment_type_gate(job('Singapore', 'Singapore', 'Full-time Permanent'), strategy)
+    emp_e = evaluate_employment_type_gate(job('Exampleland', 'Example City', 'Full-time Permanent'), strategy)
     check('E_full_time_permanent_passes', emp_e['Employment_Type_Gate_Status'] == 'PASS', emp_e)
 
-    emp_f = evaluate_employment_type_gate(job('Singapore', 'Singapore', 'Full-time Contract'), strategy)
+    emp_f = evaluate_employment_type_gate(job('Exampleland', 'Example City', 'Full-time Contract'), strategy)
     check(
         'F_full_time_contract_passes_not_rejected_for_non_permanence',
         emp_f['Employment_Type_Gate_Status'] == 'PASS',
         emp_f,
     )
 
-    emp_g = evaluate_employment_type_gate(job('Singapore', 'Singapore', 'Part Time'), strategy)
+    emp_g = evaluate_employment_type_gate(job('Exampleland', 'Example City', 'Part Time'), strategy)
     check('G_part_time_fails', emp_g['Employment_Type_Gate_Status'] == 'FAIL', emp_g)
 
-    emp_h = evaluate_employment_type_gate(job('Singapore', 'Singapore', 'Intern'), strategy)
+    emp_h = evaluate_employment_type_gate(job('Exampleland', 'Example City', 'Intern'), strategy)
     check('H_internship_fails', emp_h['Employment_Type_Gate_Status'] == 'FAIL', emp_h)
 
-    emp_i = evaluate_employment_type_gate(job('Singapore', 'Singapore', None), strategy)
+    emp_i = evaluate_employment_type_gate(job('Exampleland', 'Example City', None), strategy)
     check('I_unstated_employment_type_manual_review', emp_i['Employment_Type_Gate_Status'] == 'MANUAL_REVIEW', emp_i)
 
     # --- INTEGRATION (end-to-end through evaluate_hard_gates) ---
@@ -143,7 +140,7 @@ def main() -> None:
         integration_fail,
     )
 
-    integration_review = full_gate(profile, strategy, job('Singapore', 'Singapore', 'Part Time'))
+    integration_review = full_gate(profile, strategy, job('Exampleland', 'Example City', 'Part Time'))
     check(
         'K_integration_part_time_contributes_review_or_fail',
         integration_review['Employment_Type_Assessment']['Employment_Type_Gate_Status'] == 'FAIL'
@@ -152,7 +149,7 @@ def main() -> None:
     )
 
     # --- REGRESSION GUARD: contract permanence never used against full-time-only ---
-    emp_permanence_only = evaluate_employment_type_gate(job('Singapore', 'Singapore', 'Contract'), strategy)
+    emp_permanence_only = evaluate_employment_type_gate(job('Exampleland', 'Example City', 'Contract'), strategy)
     check(
         'L_bare_contract_with_no_schedule_word_is_manual_review_not_fail',
         emp_permanence_only['Employment_Type_Gate_Status'] == 'MANUAL_REVIEW',
