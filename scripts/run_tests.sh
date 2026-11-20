@@ -15,6 +15,8 @@ for suite in run_experience_consumer_tests run_location_employment_gate_tests \
   [ "$result" = "PASS" ] || status=1
 done
 
+python3 -m unittest discover -s tests -q 2>"$OUT/unit.log" && printf '%-40s %s\n' "unit tests" "PASS" || { printf '%-40s %s\n' "unit tests" "FAIL (see $OUT/unit.log)"; status=1; }
+
 python3 15_Application_Engine/run_dry_run.py \
   --input 15_Application_Engine/test_jobs/synthetic_test_jobs.json \
   --output "$OUT/dry_run.json" > /dev/null
@@ -22,9 +24,16 @@ python3 - "$OUT/dry_run.json" 15_Application_Engine/test_jobs/expected_outcomes.
 import json, sys
 results = {job['Job_ID']: job for job in json.load(open(sys.argv[1]))}
 expected = json.load(open(sys.argv[2]))
-bad = [jid for jid, exp in expected.items()
-       if any(results.get(jid, {}).get(k) != v for k, v in exp.items() if k in ('Hard_Gate_Status', 'Decision'))]
-print(f"{'dry_run vs expected outcomes':<40} {'PASS' if not bad else 'FAIL ' + ', '.join(bad)}")
-sys.exit(1 if bad else 0)
+bad = [f"{jid}:{k}" for jid, exp in expected.items() for k, v in exp.items() if results.get(jid, {}).get(k) != v]
+missing = sorted(set(expected) - set(results))
+ok = not bad and not missing
+print(f"{'dry_run vs expected outcomes (all fields)':<40} {'PASS' if ok else 'FAIL ' + ', '.join(bad + missing)}")
+bad = bad + missing
+sys.path.insert(0, '11_Automation')
+from qa.schema_validation import validate_schema
+schema = json.load(open('11_Automation/schemas/job.schema.json'))
+schema_errors = [e for job in results.values() for e in validate_schema(job, schema, job['Job_ID'])]
+print(f"{'dry_run output vs job schema':<40} {'PASS' if not schema_errors else 'FAIL ' + '; '.join(schema_errors[:3])}")
+sys.exit(1 if bad or schema_errors else 0)
 PY
 exit $status
