@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fit Scoring"
+  short_description: "Calculate guarded deterministic job fit"
+  default_prompt: "Use $fit-scoring to calculate a deterministic Career_OS Fit Score after gap and circuit-breaker checks."
