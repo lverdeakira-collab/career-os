@@ -6,8 +6,8 @@ from hard_filters.location_employment_gates import (
     evaluate_employment_type_gate,
     evaluate_location_gate,
 )
-from policy.singapore.language_classifier import classify_language_requirements
-from policy.singapore.work_authorization import classify_work_authorization
+from eligibility import classify_language_requirements, classify_work_authorization, load_preferences
+from eligibility.work_authorization import candidate_status
 from resume_router.route_resume import is_incompatible_engineering
 
 
@@ -18,14 +18,14 @@ def evaluate_hard_gates(
     *,
     work_authorization: dict | None = None,
     language_assessments: list[dict] | None = None,
-    employment_policy: dict | None = None,
     strategy: dict | None = None,
 ) -> dict:
     failures = []
     reviews = []
     gaps = gaps or []
-    work_authorization = work_authorization or classify_work_authorization(job, profile)
-    language_assessments = language_assessments or classify_language_requirements(job, profile)
+    preferences = load_preferences(strategy)
+    work_authorization = work_authorization or classify_work_authorization(job, profile, strategy)
+    language_assessments = language_assessments or classify_language_requirements(job, profile, strategy)
     circuit_breaker = evaluate_circuit_breaker(gaps)
 
     if is_incompatible_engineering(job):
@@ -61,13 +61,13 @@ def evaluate_hard_gates(
         reviews.append(employment_type_gate['Employment_Type_Gate_Reason'])
 
     country = job.get('Country')
-    authorized = {
-        str(value).lower()
-        for value in (profile.get('location_constraints') or {}).get('work_authorization_countries', [])
-    }
     if not country:
         reviews.append('Country/location eligibility is unknown.')
-    elif country.lower() not in authorized and work_authorization['work_authorization_signal'] == 'NOT_STATED':
+    elif (
+        work_authorization['work_authorization_signal'] == 'NOT_STATED'
+        and not candidate_status(profile, country)['country_authorized']
+        and preferences['work_authorization_not_stated'] != 'IGNORE'
+    ):
         reviews.append(f'Work authorization for {country} is not established; sponsorship is not stated.')
 
     if work_authorization['hard_gate_effect'] == 'CRITICAL_HARD_REQUIREMENT_MISSING':
@@ -94,16 +94,6 @@ def evaluate_hard_gates(
     education_text = ' '.join(job.get('Mandatory_Education') or []).lower()
     if education_text and any(term in education_text for term in ['computer science only', 'engineering license', 'medical degree', 'law degree']):
         failures.append('Mandatory education establishes a fundamentally incompatible profession.')
-
-    facts = profile.get('work_authorization_facts') or {}
-    requires_sponsorship = facts.get('requires_sponsorship_for_singapore')
-    if employment_policy and employment_policy.get('ep_feasibility') == 'EXPLICITLY_INELIGIBLE':
-        if requires_sponsorship is True:
-            failures.append('Verified sponsorship need plus an explicitly unmet active EP salary rule.')
-        elif country and country.lower() not in authorized:
-            reviews.append('EP salary evidence is explicitly below threshold, but Candidate Truth does not establish that EP sponsorship is required.')
-    elif employment_policy and employment_policy.get('human_review_required') and requires_sponsorship is True:
-        reviews.append('Singapore employment-policy feasibility requires human review.')
 
     failures = list(dict.fromkeys(failures))
     reviews = list(dict.fromkeys(reviews))

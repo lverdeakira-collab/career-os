@@ -3,17 +3,16 @@ from __future__ import annotations
 import re
 
 
-# Countries recognized elsewhere in the pipeline (job_discovery/normalize_source.py's
-# _country() list) minus the candidate's own target location. Used only to flag a
-# preferred-country match as possibly regional/multi-country, never to establish
-# country identity itself (Country is already normalized upstream — this module
-# never re-derives it from raw text).
-OTHER_COUNTRY_MARKERS = [
-    'china', 'hong kong', 'malaysia', 'united states', 'japan', 'thailand',
-    'indonesia', 'vietnam', 'philippines', 'india', 'australia', 'taiwan', 'korea',
+# Country names used only to flag a preferred-country match as possibly
+# regional/multi-country. The candidate's own preferred locations are removed
+# from this list at evaluation time, so no country is assumed as "home".
+COUNTRY_MARKERS = [
+    'singapore', 'china', 'hong kong', 'malaysia', 'united states', 'united kingdom', 'japan',
+    'thailand', 'indonesia', 'vietnam', 'philippines', 'india', 'australia', 'taiwan', 'korea',
+    'canada', 'germany', 'france', 'netherlands', 'ireland', 'united arab emirates',
 ]
 REGIONAL_MARKERS = [
-    'apac', 'sea region', 'asean', 'regional', 'multiple locations',
+    'apac', 'emea', 'sea region', 'asean', 'regional', 'multiple locations',
     'various locations', 'multi-country', 'multiple countries', 'sea regional',
 ]
 
@@ -88,8 +87,8 @@ def evaluate_location_gate(job: dict, strategy: dict | None) -> dict:
         str(value) for value in (job.get('Location'), job.get('Role_Title')) if value
     ).lower()
     other_country_hits = sorted({
-        marker for marker in OTHER_COUNTRY_MARKERS
-        if marker in combined_text and marker != str(country).strip().lower()
+        marker for marker in COUNTRY_MARKERS
+        if marker in combined_text and marker != str(country).strip().lower() and marker not in preferred
     })
     regional_hits = sorted({marker for marker in REGIONAL_MARKERS if marker in combined_text})
     if other_country_hits or regional_hits:

@@ -1,6 +1,10 @@
 {
   "version": "1.0",
-  "results": ["PASS", "MANUAL_REVIEW", "FAIL"],
+  "results": [
+    "PASS",
+    "MANUAL_REVIEW",
+    "FAIL"
+  ],
   "categories": [
     "location_compatibility",
     "seniority_compatibility",
@@ -20,15 +24,25 @@
     "5_plus": "FAIL for normal early-career applications"
   },
   "criticality": {
-    "critical_types": ["MUST_HAVE", "REQUIRED", "LANGUAGE", "LICENSE", "WORK_AUTHORIZATION"],
+    "critical_types": [
+      "MUST_HAVE",
+      "REQUIRED",
+      "LANGUAGE",
+      "LICENSE",
+      "WORK_AUTHORIZATION"
+    ],
     "circuit_breaker_condition": "criticality == CRITICAL AND gap_status == MISSING",
     "unknown_behavior": "MANUAL_REVIEW when the independent hard-filter policy requires evidence; never trigger the circuit breaker from UNKNOWN alone"
   },
-  "singapore_policy": {
-    "canonical_package": "11_Automation/policy/singapore/",
-    "company_size_ep_rejection": false,
-    "missing_mycareersfuture_listing_ep_rejection": false,
-    "sponsorship_not_mentioned": "UNKNOWN"
-  },
-  "ambiguity_policy": "Use MANUAL_REVIEW, never FAIL, when a true eligibility condition cannot be established from available text."
+  "ambiguity_policy": "Use MANUAL_REVIEW, never FAIL, when a true eligibility condition cannot be established from available text.",
+  "eligibility": {
+    "package": "11_Automation/eligibility/",
+    "configured_by": "candidate_strategy.json -> eligibility_preferences",
+    "actions": [
+      "SKIP",
+      "REVIEW",
+      "IGNORE"
+    ],
+    "sponsorship_not_mentioned": "UNKNOWN; handled by work_authorization_not_stated"
+  }
 }
