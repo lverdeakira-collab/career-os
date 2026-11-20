@@ -44,5 +44,12 @@
       "IGNORE"
     ],
     "sponsorship_not_mentioned": "UNKNOWN; handled by work_authorization_not_stated"
+  },
+  "manual_review_for_unverified": {
+    "_note": "Requirement types that send a job to manual review when the candidate's evidence is UNKNOWN or PARTIAL. Other unverified requirements only lower the fit score.",
+    "requirement_types": [
+      "MUST_HAVE",
+      "LICENSE"
+    ]
   }
 }

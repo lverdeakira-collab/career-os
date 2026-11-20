@@ -6,9 +6,16 @@ from hard_filters.location_employment_gates import (
     evaluate_employment_type_gate,
     evaluate_location_gate,
 )
+from pathlib import Path
+
+from common import load_json
 from eligibility import classify_language_requirements, classify_work_authorization, load_preferences
 from eligibility.work_authorization import candidate_status
 from resume_router.route_resume import is_incompatible_engineering
+
+
+RULES = load_json(Path(__file__).with_name('rules.json'))
+REVIEW_UNVERIFIED_TYPES = set(RULES['manual_review_for_unverified']['requirement_types'])
 
 
 def evaluate_hard_gates(
@@ -88,7 +95,7 @@ def evaluate_hard_gates(
         requirement_type = gap.get('Requirement_Type')
         if category == 'MISSING':
             failures.append(f"Critical requirement confirmed missing: {gap.get('Requirement')}.")
-        elif category in {'UNKNOWN', 'PARTIAL'} and requirement_type in {'MUST_HAVE', 'REQUIRED', 'LICENSE'}:
+        elif category in {'UNKNOWN', 'PARTIAL'} and requirement_type in REVIEW_UNVERIFIED_TYPES:
             reviews.append(f"Critical requirement requires evidence review: {gap.get('Requirement')}.")
 
     education_text = ' '.join(job.get('Mandatory_Education') or []).lower()
