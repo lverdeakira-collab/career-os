@@ -1,0 +1,39 @@
+{
+  "synthetic_validation_only": true,
+  "possible_duplicate_a": {
+    "raw_record_id": "A",
+    "source_url": "https://example.invalid/a",
+    "company": "Synthetic Test Co",
+    "job_title": "Analyst",
+    "location_raw": "Singapore",
+    "source_connector": "lever",
+    "source_job_id": "A",
+    "requisition_id": null,
+    "job_description_raw": "Analyze commercial performance, prepare reporting, partner with finance and operations on planning and monthly reviews."
+  },
+  "possible_duplicate_b": {
+    "raw_record_id": "B",
+    "source_url": "https://example.invalid/b",
+    "company": "Synthetic Test Co",
+    "job_title": "Analyst",
+    "location_raw": "Singapore",
+    "source_connector": "greenhouse",
+    "source_job_id": "B",
+    "requisition_id": null,
+    "job_description_raw": "Analyze commercial performance, prepare reporting, partner with finance and operations on forecasting and quarterly reviews."
+  },
+  "missing_field_record": {
+    "source": "SYNTHETIC_STAGE4_VALIDATION",
+    "source_url": "https://example.invalid/test",
+    "company": "Synthetic Missing Fields",
+    "job_title": "Analyst",
+    "location_raw": null,
+    "posting_date_raw": null,
+    "employment_type_raw": null,
+    "seniority_raw": null,
+    "department_raw": null,
+    "job_description_raw": "Analyst role.",
+    "source_metadata": {},
+    "source_payload": {}
+  }
+}
