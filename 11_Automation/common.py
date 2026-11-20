@@ -25,10 +25,8 @@ BASE_RESUMES = [
 # Base-resume selection must use BASE_RESUMES, not DIRECTIONS.
 DIRECTIONS = FUNCTIONAL_ROUTES
 
-RESUME_PATHS = {
-    'COMMERCIAL_PRIMARY': '16_Resume_Rebuild/production_base_cuts/commercial_primary_base_cut.pdf',
-    'CF_TRANSACTION_SECONDARY': '16_Resume_Rebuild/production_base_cuts/cf_transaction_secondary_base_cut.pdf',
-}
+# Base-resume file locations are read from candidate_profile.json -> resume_variants,
+# so they live with the user's private data, not in the engine.
 
 
 def load_json(path: Path) -> Any:
