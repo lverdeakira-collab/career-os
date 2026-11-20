@@ -1,0 +1,20 @@
+# Private candidate data — never commit
+private/
+*.private.json
+**/candidate_profile.local.json
+**/candidate_strategy.local.json
+*.docx
+*.pdf
+*.xlsx
+
+# Generated output
+15_Application_Engine/test_results/
+15_Application_Engine/routing_records/
+08_Job_Search/
+10_Application_Tracker/
+11_Applications/
+
+# Python / OS
+__pycache__/
+*.pyc
+.DS_Store
