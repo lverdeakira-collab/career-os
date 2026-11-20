@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "authority": "Career_OS deterministic Fit Score",
+  "total": 100,
+  "components": {
+    "Role_Functional_Match": 30,
+    "Experience_Evidence": 25,
+    "Skills_Match": 20,
+    "Industry_Match": 10,
+    "Education_Match": 10,
+    "Practical_Fit": 5
+  },
+  "decision_bands": [
+    {"minimum": 85, "maximum": 100, "decision": "PRIORITY_APPLY"},
+    {"minimum": 75, "maximum": 84, "decision": "APPLY"},
+    {"minimum": 65, "maximum": 74, "decision": "REVIEW"},
+    {"minimum": 0, "maximum": 64, "decision": "SKIP"}
+  ],
+  "overrides": {
+    "Critical_Circuit_Breaker": "SKIP and HARD_GATE_FAILED",
+    "Hard_Gate_FAIL": "SKIP and HARD_GATE_FAILED",
+    "Hard_Gate_MANUAL_REVIEW": "REVIEW and READY_FOR_REVIEW"
+  },
+  "score_cap_policy": "No numeric score cap existed in v0.1 and none is introduced. Confirmed critical MISSING uses a decision override; the numerical evidence score remains auditable.",
+  "llm_boundary": "An LLM may classify semantic evidence but may not assign weights, compute the final score, change bands, or bypass overrides."
+}
