@@ -4,7 +4,7 @@ Career OS is designed so that reusable logic and private candidate data never li
 
 ## What is in this repository
 
-- Engine code, JSON Schemas, scoring weights, routing rules and public Singapore policy references.
+- Engine code, JSON Schemas, scoring weights, routing rules and configurable eligibility rules.
 - Agent skills that contain operating instructions only.
 - **Synthetic** fixtures: `candidate_profile.json`, `candidate_strategy.json`, and test jobs use invented people and companies (for example "Alex Example", "Synthetic Bank Alpha").
 
