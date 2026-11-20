@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "canonical_categories": {
+    "MATCHED": "Direct verified Candidate Truth evidence satisfies the stated requirement.",
+    "PARTIAL": "Verified evidence is related or transferable but does not fully establish the requirement.",
+    "MISSING": "The JD explicitly states the requirement and Candidate Truth contains evidence confirming the candidate does not possess it.",
+    "UNKNOWN": "Available Candidate Truth or JD evidence is insufficient to determine satisfaction.",
+    "NOT_APPLICABLE": "The item is not a candidate requirement or is absent from the JD."
+  },
+  "legacy_read_compatibility": {
+    "VERIFIED_MATCH": "MATCHED",
+    "PARTIAL_MATCH": "PARTIAL",
+    "TRANSFERABLE": "PARTIAL"
+  },
+  "requirement_types": [
+    "MUST_HAVE", "REQUIRED", "PREFERRED", "NICE_TO_HAVE", "RESPONSIBILITY",
+    "LANGUAGE", "LICENSE", "WORK_AUTHORIZATION", "EDUCATION"
+  ],
+  "critical_rule": "Only CRITICAL plus confirmed MISSING may trigger the Critical Hard Requirement Circuit Breaker.",
+  "integrity_rule": "A gap must never be resolved by adding an unsupported fact to Candidate Truth or a resume."
+}
