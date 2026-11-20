@@ -1,0 +1,14 @@
+{
+  "version": "0.1",
+  "families": {
+    "Financial Analyst": ["Finance Analyst", "Financial Analyst", "Junior Financial Analyst", "FP&A Analyst"],
+    "Commercial Finance Analyst": ["Commercial Finance Analyst", "Business Finance Analyst"],
+    "Credit Analyst": ["Credit Analyst", "Credit Risk Analyst"],
+    "Corporate Banking Analyst": ["Corporate Banking Analyst", "Commercial Banking Analyst"],
+    "Strategy Analyst": ["Strategy Analyst", "Business Strategy Analyst", "Corporate Strategy Analyst"],
+    "Business Analytics Analyst": ["Business Analytics Analyst", "Data Analyst", "BI Analyst", "Business Intelligence Analyst"],
+    "AI Transformation Analyst": ["AI Transformation Analyst", "Digital Transformation Analyst"],
+    "Software / ML Engineer": ["Software Engineer", "Machine Learning Engineer", "ML Engineer"]
+  },
+  "preserve_original_title": true
+}
