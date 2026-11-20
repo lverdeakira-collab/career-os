@@ -114,8 +114,11 @@ def _work_authorization_gap(assessment: dict) -> dict | None:
     if signal == 'NOT_STATED':
         return None
     effect = assessment['hard_gate_effect']
+    ignored = assessment.get('user_action') == 'IGNORE' and not (assessment.get('candidate_evidence') or {}).get('country_authorized')
     if effect == 'CRITICAL_HARD_REQUIREMENT_MISSING':
         status = 'MISSING'
+    elif ignored:
+        status = 'NOT_APPLICABLE'
     elif effect == 'NONE' and signal not in {'LOCAL_CANDIDATES_PREFERRED', 'EXISTING_AUTHORIZATION_PREFERRED'}:
         status = 'MATCHED'
     elif signal in {'LOCAL_CANDIDATES_PREFERRED', 'EXISTING_AUTHORIZATION_PREFERRED'}:
