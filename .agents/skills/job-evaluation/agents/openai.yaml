@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Evaluation"
+  short_description: "Evaluate a job through guarded Career_OS stages"
+  default_prompt: "Use $job-evaluation to evaluate a stored job through the canonical Career_OS hardening pipeline."
