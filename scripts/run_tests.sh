@@ -18,5 +18,13 @@ done
 python3 15_Application_Engine/run_dry_run.py \
   --input 15_Application_Engine/test_jobs/synthetic_test_jobs.json \
   --output "$OUT/dry_run.json" > /dev/null
-printf '%-40s %s\n' "dry_run (synthetic jobs)" "OK"
+python3 - "$OUT/dry_run.json" 15_Application_Engine/test_jobs/expected_outcomes.json <<'PY' || status=1
+import json, sys
+results = {job['Job_ID']: job for job in json.load(open(sys.argv[1]))}
+expected = json.load(open(sys.argv[2]))
+bad = [jid for jid, exp in expected.items()
+       if any(results.get(jid, {}).get(k) != v for k, v in exp.items() if k in ('Hard_Gate_Status', 'Decision'))]
+print(f"{'dry_run vs expected outcomes':<40} {'PASS' if not bad else 'FAIL ' + ', '.join(bad)}")
+sys.exit(1 if bad else 0)
+PY
 exit $status
