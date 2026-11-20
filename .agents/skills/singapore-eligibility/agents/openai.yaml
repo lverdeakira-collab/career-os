@@ -1,4 +1,0 @@
-interface:
-  display_name: "Singapore Eligibility"
-  short_description: "Assess Singapore employment-policy evidence"
-  default_prompt: "Use $singapore-eligibility to assess Singapore work-authorization and EP policy evidence with current canonical rules."
