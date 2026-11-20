@@ -1,0 +1,40 @@
+{
+  "strategy_version": "1.0",
+  "engine_version": "1.0",
+  "last_updated": "2026-01-01",
+  "candidate_truth_path": "15_Application_Engine/candidate_profile.json",
+  "personal_salary_floor_sgd": null,
+  "preferred_locations": [
+    "Singapore"
+  ],
+  "target_role_families": [],
+  "preferred_employment_types": [
+    "Full-time"
+  ],
+  "contract_duration_preferences": {
+    "accepts_contract": true,
+    "accepts_permanent": true,
+    "notes": "SYNTHETIC example."
+  },
+  "hard_disqualifiers": [
+    "Title contains 'Senior' (SDM = Senior/Director/Manager-level roles, excluded)",
+    "Title contains 'Director' (SDM = Senior/Director/Manager-level roles, excluded)",
+    "Title contains 'Manager' (SDM = Senior/Director/Manager-level roles, excluded)"
+  ],
+  "human_required_topics": [
+    "work authorization or sponsorship when the job text is ambiguous",
+    "employment-pass feasibility when employer-side COMPASS evidence is unavailable",
+    "salary expectations",
+    "relocation"
+  ],
+  "willingness_to_relocate": false,
+  "career_direction_preferences": [
+    "Commercial / Research",
+    "Corporate Finance / Transaction / Advisory",
+    "Markets / FMI / FinTech"
+  ],
+  "notes": [
+    "SYNTHETIC example strategy. Replace with your own preferences in a private copy.",
+    "personal_salary_floor_sgd must never be substituted for an MOM qualifying-salary threshold."
+  ]
+}

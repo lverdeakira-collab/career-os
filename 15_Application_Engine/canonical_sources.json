@@ -1,0 +1,22 @@
+{
+  "registry_version": "1.1",
+  "engine_status": "STAGE 3 HARDENED v1.0 + TWO-BASE ROUTER MIGRATION",
+  "candidate_truth": "15_Application_Engine/candidate_profile.json",
+  "candidate_truth_schema": "11_Automation/schemas/candidate_profile.schema.json",
+  "candidate_strategy": "15_Application_Engine/candidate_strategy.json",
+  "candidate_strategy_schema": "11_Automation/schemas/candidate_strategy.schema.json",
+  "singapore_policy_package": "11_Automation/policy/singapore/",
+  "gap_semantics": "11_Automation/gap_analysis/gap_categories.json",
+  "critical_requirement_rules": "11_Automation/hard_filters/rules.json",
+  "fit_scoring": "11_Automation/fit_scoring/weights.json",
+  "resume_routing": "11_Automation/resume_router/routing_rules.json",
+  "status_machine": "11_Automation/schemas/status_definitions.json",
+  "job_schema": "11_Automation/schemas/job.schema.json",
+  "application_schema": "11_Automation/schemas/application.schema.json",
+  "fact_ledger": "PRIVATE \u2014 kept in the user's private workspace, not published",
+  "production_base_manifest": "PRIVATE \u2014 kept in the user's private workspace, not published",
+  "base_resume_freeze": "PRIVATE \u2014 kept in the user's private workspace, not published",
+  "legacy_resume_archive_freeze": "PRIVATE \u2014 kept in the user's private workspace, not published",
+  "runtime_orchestrator": "15_Application_Engine/run_dry_run.py",
+  "rule": "Skills and documentation point to these canonical sources; they do not duplicate full rule values or candidate facts. Exactly two production base resumes may be selected. In this public repository the candidate truth and strategy files are synthetic."
+}

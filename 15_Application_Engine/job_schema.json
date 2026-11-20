@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "../11_Automation/schemas/job.schema.json",
+  "description": "Canonical schema is maintained in 11_Automation/schemas/job.schema.json."
+}

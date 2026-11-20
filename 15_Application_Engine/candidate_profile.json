@@ -1,0 +1,206 @@
+{
+  "profile_version": "0.1",
+  "engine_version": "0.1",
+  "generated_date": "2026-01-01",
+  "identity": {
+    "name": "Alex Example (SYNTHETIC)",
+    "preferred_name": null,
+    "current_location": null,
+    "email": "alex@example.com",
+    "phone": "+00 0000 0000",
+    "linkedin": "https://www.linkedin.com/in/example"
+  },
+  "education": [
+    {
+      "institution": "Example University",
+      "location": "Singapore",
+      "degree": "Master of Science in Finance (synthetic)",
+      "start_date": "2025-01",
+      "end_date": "2026-08",
+      "relevant_courses": [
+        "Corporate Finance",
+        "Econometrics",
+        "Financial Modelling"
+      ],
+      "evidence": "SYNTHETIC \u2014 replace with a pointer to your own evidence file"
+    }
+  ],
+  "experience": [
+    {
+      "experience_id": "EXP-001",
+      "employer": "Example Bank",
+      "location": "Example City",
+      "role": "Client Relationship Intern",
+      "start_date": "2024-06",
+      "end_date": "2024-08",
+      "verified_scope": [
+        "Prepared client documentation",
+        "Supported relationship managers with portfolio reporting"
+      ],
+      "verified_metrics": [],
+      "evidence": "SYNTHETIC"
+    },
+    {
+      "experience_id": "EXP-002",
+      "employer": "Example Manufacturing Co.",
+      "location": "Example City",
+      "role": "Financial Analysis Intern",
+      "start_date": "2023-06",
+      "end_date": "2023-08",
+      "verified_scope": [
+        "Built Excel variance analysis",
+        "Summarised peer financial statements"
+      ],
+      "verified_metrics": [],
+      "evidence": "SYNTHETIC"
+    }
+  ],
+  "projects": [
+    {
+      "project_id": "PRJ-001",
+      "name": "Example DCF valuation project",
+      "year": 2025,
+      "verified_scope": [
+        "WACC estimation",
+        "Discounted cash flow model"
+      ],
+      "evidence": "SYNTHETIC"
+    }
+  ],
+  "technical_skills": [
+    {
+      "skill": "Microsoft Excel",
+      "evidence_status": "VERIFIED",
+      "evidence": [
+        "SYNTHETIC"
+      ]
+    },
+    {
+      "skill": "Microsoft PowerPoint",
+      "evidence_status": "VERIFIED",
+      "evidence": [
+        "SYNTHETIC"
+      ]
+    },
+    {
+      "skill": "Python",
+      "evidence_status": "VERIFIED",
+      "evidence": [
+        "SYNTHETIC"
+      ]
+    },
+    {
+      "skill": "Financial Analysis",
+      "evidence_status": "VERIFIED",
+      "evidence": [
+        "SYNTHETIC"
+      ]
+    },
+    {
+      "skill": "Business Reporting",
+      "evidence_status": "VERIFIED",
+      "evidence": [
+        "SYNTHETIC"
+      ]
+    }
+  ],
+  "verified_skills": {
+    "all": [
+      "Microsoft Excel",
+      "Microsoft PowerPoint",
+      "Python",
+      "Financial Analysis",
+      "Business Reporting",
+      "Valuation"
+    ],
+    "evidence_tags": {
+      "direct": [
+        "financial_analysis",
+        "business_reporting",
+        "client_documentation"
+      ],
+      "transferable": [
+        "stakeholder_coordination"
+      ]
+    }
+  },
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": null,
+      "evidence": "SYNTHETIC"
+    }
+  ],
+  "industry_exposure": [
+    "Banking",
+    "Manufacturing"
+  ],
+  "functional_exposure": [
+    "Financial Analysis",
+    "Client Service"
+  ],
+  "location_constraints": {
+    "work_authorization_countries": [],
+    "current_location": "Singapore",
+    "target_locations": [],
+    "remote_preference": null,
+    "relocation_preference": null,
+    "sponsorship_requirement": "SYNTHETIC: assume an employer-sponsored work pass is required.",
+    "evidence": "SYNTHETIC"
+  },
+  "work_authorization_facts": {
+    "singapore_status": "NOT_CITIZEN_OR_PR",
+    "requires_sponsorship_for_singapore": true,
+    "unrestricted_work_authorization_countries": [],
+    "confirmed_no_work_authorization_countries": [],
+    "evidence": "SYNTHETIC"
+  },
+  "career_directions": [
+    "Commercial / Research",
+    "Corporate Finance / Transaction / Advisory",
+    "Markets / FMI / FinTech"
+  ],
+  "seniority_level": {
+    "classification": "EARLY_CAREER",
+    "primary_target_range": [
+      "Graduate",
+      "Entry Level",
+      "Analyst",
+      "Junior Associate"
+    ],
+    "selective_target": [
+      "Associate"
+    ],
+    "normally_out_of_scope": [
+      "Senior Associate",
+      "Manager",
+      "Senior Manager",
+      "Director",
+      "Executive"
+    ],
+    "basis": "SYNTHETIC routing policy classification"
+  },
+  "unsupported_prohibited_claims": [
+    "Do not claim professional licences, full-time years of experience, or metrics that are not in the evidence files."
+  ],
+  "resume_variants": [
+    {
+      "name": "COMMERCIAL_PRIMARY",
+      "version": "Production Base v1.0",
+      "docx": "private/resumes/commercial_primary.docx",
+      "pdf": "private/resumes/commercial_primary.pdf"
+    },
+    {
+      "name": "CF_TRANSACTION_SECONDARY",
+      "version": "Production Base v1.0",
+      "docx": "private/resumes/cf_transaction_secondary.docx",
+      "pdf": "private/resumes/cf_transaction_secondary.pdf"
+    }
+  ],
+  "evidence_links": [
+    "private/evidence/README.md"
+  ],
+  "unknowns": [
+    "Language proficiency levels are not yet recorded."
+  ]
+}
