@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "notes": "Maps alternative wordings in postings to the canonical skill name used in the Candidate Profile. Shipped with business/finance examples; extend for your own field.",
+  "aliases": {
+    "excel": "microsoft excel",
+    "ms excel": "microsoft excel",
+    "powerpoint": "microsoft powerpoint",
+    "ms powerpoint": "microsoft powerpoint",
+    "generative ai": "generative ai / gpt",
+    "gpt": "generative ai / gpt",
+    "discounted cash flow": "dcf valuation",
+    "dcf": "dcf valuation",
+    "capm-derived wacc": "wacc",
+    "panel data": "panel-data analysis",
+    "due diligence": "due-diligence support",
+    "credit applications": "credit-application support",
+    "financial modelling": "financial modeling",
+    "data visualisation": "data visualization",
+    "stakeholder management": "stakeholder coordination"
+  }
+}

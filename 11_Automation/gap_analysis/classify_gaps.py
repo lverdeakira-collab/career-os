@@ -1,21 +1,16 @@
 from __future__ import annotations
 
+from pathlib import Path
 import re
 
+from common import load_json
 
-SYNONYMS = {
-    'excel': 'microsoft excel',
-    'ms excel': 'microsoft excel',
-    'powerpoint': 'microsoft powerpoint',
-    'generative ai': 'generative ai / gpt',
-    'gpt': 'generative ai / gpt',
-    'discounted cash flow': 'dcf valuation',
-    'dcf': 'dcf valuation',
-    'capm-derived wacc': 'wacc',
-    'panel data': 'panel-data analysis',
-    'due diligence': 'due-diligence support',
-    'credit applications': 'credit-application support',
-}
+
+ALIASES_PATH = Path(__file__).with_name('skill_aliases.json')
+SYNONYMS = {k.lower(): v.lower() for k, v in load_json(ALIASES_PATH)['aliases'].items()}
+# A related (PARTIAL) match needs this share of the requirement's words to
+# appear in one verified skill.
+RELATED_OVERLAP_THRESHOLD = 0.75
 
 CRITICAL_REQUIREMENT_TYPES = {'MUST_HAVE', 'REQUIRED', 'LANGUAGE', 'LICENSE', 'WORK_AUTHORIZATION'}
 
@@ -77,9 +72,19 @@ def classify_requirement(
             requirement, requirement_type, 'MATCHED', 'Candidate Profile verified skills',
             evidence_type='DIRECT', source=source,
         )
+    # A verified skill named inside a longer requirement ("advanced Microsoft
+    # Excel skills") is the same skill, so a detailed posting is not penalised.
+    padded = f' {value} '
+    contained = [candidate for candidate in skills if candidate and f' {candidate} ' in padded]
+    if contained:
+        return _result(
+            requirement, requirement_type, 'MATCHED',
+            f'Candidate Profile verified skill named in requirement: {max(contained, key=len)}',
+            evidence_type='DIRECT', source=source,
+        )
     tokens = set(value.split())
     best_overlap = max((len(tokens & set(candidate.split())) / max(len(tokens), 1) for candidate in skills), default=0)
-    if best_overlap >= 0.75:
+    if best_overlap >= RELATED_OVERLAP_THRESHOLD:
         return _result(
             requirement, requirement_type, 'PARTIAL',
             'Related verified skill; exact scope should be reviewed', evidence_type='RELATED', source=source,
@@ -148,16 +153,19 @@ def analyze_gaps(
         for requirement in job.get(field) or []:
             gaps.append(classify_requirement(requirement, profile, requirement_type, source=field))
 
-    direct = set((profile.get('verified_skills') or {}).get('evidence_tags', {}).get('direct', []))
-    transferable = set((profile.get('verified_skills') or {}).get('evidence_tags', {}).get('transferable', []))
+    evidence_tags = (profile.get('verified_skills') or {}).get('evidence_tags', {})
+    direct = {key(str(tag)) for tag in evidence_tags.get('direct', [])}
+    transferable = {key(str(tag)) for tag in evidence_tags.get('transferable', [])}
     confirmed_absent_tags = _confirmed_absences(profile, 'responsibility_tags')
     for tag in job.get('Responsibility_Tags') or []:
-        normalized_tag = key(tag)
-        if tag in direct:
+        # Every comparison uses the same normalized key, so case and
+        # punctuation never change the result.
+        normalized_tag = key(str(tag))
+        if normalized_tag in direct:
             category, evidence, evidence_type = 'MATCHED', 'Candidate Profile direct evidence tag', 'DIRECT'
-        elif tag in transferable:
+        elif normalized_tag in transferable:
             category, evidence, evidence_type = 'PARTIAL', 'Candidate Profile transferable evidence tag', 'TRANSFERABLE'
-        elif not tag or tag.startswith('unknown'):
+        elif not normalized_tag or normalized_tag.startswith('unknown'):
             category, evidence, evidence_type = 'UNKNOWN', None, 'INSUFFICIENT_EVIDENCE'
         elif normalized_tag in confirmed_absent_tags:
             category, evidence, evidence_type = 'MISSING', 'Candidate Truth confirmed absence', 'CONFIRMED_ABSENCE'
