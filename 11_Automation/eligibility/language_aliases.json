@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "notes": "Maps language names found in postings to a canonical name. Extend freely; nothing here encodes any country's policy.",
+  "language_aliases": {
+    "english": "English",
+    "mandarin": "Chinese",
+    "chinese": "Chinese",
+    "cantonese": "Cantonese",
+    "japanese": "Japanese",
+    "korean": "Korean",
+    "thai": "Thai",
+    "vietnamese": "Vietnamese",
+    "bahasa indonesia": "Bahasa Indonesia",
+    "bahasa melayu": "Malay",
+    "malay": "Malay",
+    "tagalog": "Tagalog",
+    "hindi": "Hindi",
+    "french": "French",
+    "german": "German",
+    "spanish": "Spanish",
+    "portuguese": "Portuguese",
+    "italian": "Italian",
+    "dutch": "Dutch",
+    "arabic": "Arabic",
+    "russian": "Russian"
+  }
+}
