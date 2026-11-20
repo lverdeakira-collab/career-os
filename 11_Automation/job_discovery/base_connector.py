@@ -5,6 +5,8 @@ from hashlib import sha256
 from html import unescape
 from html.parser import HTMLParser
 import json
+import threading
+import time
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -52,10 +54,28 @@ class BaseJobConnector(ABC):
     connector_name = 'base'
     source_category = 'Public ATS job pages'
 
+    USER_AGENT = 'career-os/1.1 (open-source job discovery; public ATS endpoints only)'
+    MAX_ATTEMPTS = 3
+    BACKOFF_SECONDS = 2.0
+    MIN_INTERVAL_SECONDS = 1.0
+    RETRY_STATUSES = {429, 500, 502, 503, 504}
+    _rate_lock = threading.Lock()
+    _last_request_at = 0.0
+
     def __init__(self, board: str, company: str, timeout: int = 20) -> None:
         self.board = board
         self.company = company
         self.timeout = timeout
+
+    @classmethod
+    def _respect_rate_limit(cls) -> None:
+        # One request at a time, at least MIN_INTERVAL_SECONDS apart, across
+        # all connectors in the process.
+        with cls._rate_lock:
+            wait = cls._last_request_at + cls.MIN_INTERVAL_SECONDS - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            BaseJobConnector._last_request_at = time.monotonic()
 
     @property
     @abstractmethod
@@ -63,18 +83,30 @@ class BaseJobConnector(ABC):
         raise NotImplementedError
 
     def _fetch_json(self, url: str) -> Any:
-        request = Request(url, headers={'User-Agent': 'Career_OS-Stage4/0.1 (public-job-validation)'})
-        try:
-            with urlopen(request, timeout=self.timeout) as response:
-                if response.status != 200:
-                    raise SourceAccessError('SOURCE_ACCESS_LIMITED', f'HTTP {response.status} for {url}')
-                return json.loads(response.read().decode('utf-8'))
-        except HTTPError as exc:
-            raise SourceAccessError('SOURCE_ACCESS_LIMITED', f'HTTP {exc.code} for {url}') from exc
-        except (URLError, TimeoutError) as exc:
-            raise SourceAccessError('SOURCE_ACCESS_LIMITED', f'Access failed for {url}: {exc}') from exc
-        except json.JSONDecodeError as exc:
-            raise SourceAccessError('PARSING_ERROR', f'Invalid JSON from {url}') from exc
+        last_error: SourceAccessError | None = None
+        for attempt in range(1, self.MAX_ATTEMPTS + 1):
+            self._respect_rate_limit()
+            request = Request(url, headers={'User-Agent': self.USER_AGENT, 'Accept': 'application/json'})
+            try:
+                with urlopen(request, timeout=self.timeout) as response:
+                    if response.status != 200:
+                        raise SourceAccessError('SOURCE_ACCESS_LIMITED', f'HTTP {response.status} for {url}')
+                    return json.loads(response.read().decode('utf-8'))
+            except HTTPError as exc:
+                last_error = SourceAccessError('SOURCE_ACCESS_LIMITED', f'HTTP {exc.code} for {url}')
+                if exc.code not in self.RETRY_STATUSES:
+                    raise last_error from exc
+                retry_after = exc.headers.get('Retry-After') if exc.headers else None
+                delay = float(retry_after) if retry_after and retry_after.isdigit() else self.BACKOFF_SECONDS * attempt
+            except (URLError, TimeoutError) as exc:
+                last_error = SourceAccessError('SOURCE_ACCESS_LIMITED', f'Access failed for {url}: {exc}')
+                delay = self.BACKOFF_SECONDS * attempt
+            except json.JSONDecodeError as exc:
+                raise SourceAccessError('PARSING_ERROR', f'Invalid JSON from {url}') from exc
+            if attempt < self.MAX_ATTEMPTS:
+                time.sleep(min(delay, 30.0))
+        assert last_error is not None
+        raise last_error
 
     @abstractmethod
     def discover(self) -> list[dict]:
