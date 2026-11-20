@@ -1,0 +1,39 @@
+{
+  "version": "2.0",
+  "functional_routes": [
+    "Commercial / Research",
+    "Corporate Finance / Transaction / Advisory",
+    "Markets / FMI / FinTech"
+  ],
+  "allowed_base_resumes": [
+    "COMMERCIAL_PRIMARY",
+    "CF_TRANSACTION_SECONDARY"
+  ],
+  "resume_paths": {
+    "COMMERCIAL_PRIMARY": "16_Resume_Rebuild/production_base_cuts/commercial_primary_base_cut.pdf",
+    "CF_TRANSACTION_SECONDARY": "16_Resume_Rebuild/production_base_cuts/cf_transaction_secondary_base_cut.pdf"
+  },
+  "evidence_priority": [
+    "job_responsibilities",
+    "business_function",
+    "required_skills",
+    "job_family",
+    "industry_context",
+    "role_title"
+  ],
+  "separation_rule": "Functional route classification and base-resume selection are independent outputs.",
+  "markets_policy": "Markets / FMI / FinTech is selective/stretch and selects the nearest evidence base; it never creates a third maintained base.",
+  "multi_route_policy": {
+    "one_recommended_resume_only": true,
+    "optional_secondary_base_may_be_null": true,
+    "merge_base_resumes": false,
+    "derived_copy_required_for_tailoring": true,
+    "frozen_base_overwrite_prohibited": true
+  },
+  "excluded_roles": [
+    "pure software engineering",
+    "machine-learning engineering",
+    "deep-learning deployment"
+  ],
+  "term_weight_authority": "11_Automation/resume_router/route_resume.py"
+}
