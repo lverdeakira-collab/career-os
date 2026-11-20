@@ -1,0 +1,28 @@
+{
+  "package_version": "1.0",
+  "jurisdiction": "Singapore",
+  "last_verified_at": "2026-09-03",
+  "records": [
+    {
+      "policy_id": "SG-TAFEP-LANGUAGE-JOB-RELATED",
+      "policy_version": "2026.1",
+      "policy_type": "LANGUAGE_REQUIREMENT_CONTEXT",
+      "source_authority": "Tripartite Alliance for Fair and Progressive Employment Practices",
+      "source_url": "https://www.tal.sg/tafep/getting-started/fair/tripartite-guidelines",
+      "effective_from": null,
+      "effective_to": null,
+      "last_verified_at": "2026-09-03",
+      "classifications": ["REQUIRED", "PREFERRED", "BUSINESS_CONTEXT", "UNKNOWN", "DISQUALIFYING"],
+      "notes": "TAFEP states that a particular-language proficiency requirement should have a clearly stated job-related reason. Career_OS classifies wording and candidate evidence; it does not adjudicate legality."
+    }
+  ],
+  "language_aliases": {
+    "mandarin": "Chinese",
+    "chinese": "Chinese",
+    "english": "English",
+    "thai": "Thai",
+    "bahasa indonesia": "Bahasa Indonesia",
+    "bahasa melayu": "Malay",
+    "malay": "Malay"
+  }
+}
