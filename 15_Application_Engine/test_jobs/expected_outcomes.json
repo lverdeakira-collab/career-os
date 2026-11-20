@@ -1,0 +1,14 @@
+{
+  "JOB-20260903-SYNTHETICBANKALPHA-CREDITANALYST-0001": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Corporate Finance / Transaction / Advisory", "Recommended_Resume": "CF_TRANSACTION_SECONDARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICFINANCEBETA-FINANCIALANALYST-0002": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Corporate Finance / Transaction / Advisory", "Recommended_Resume": "CF_TRANSACTION_SECONDARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICSTRATEGYGAMMA-STRATEGYANALYST-0003": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Commercial / Research", "Recommended_Resume": "COMMERCIAL_PRIMARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICANALYTICSDELTA-BUSINESSANALYTICSANALYST-0004": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Commercial / Research", "Recommended_Resume": "COMMERCIAL_PRIMARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICTRANSFORMATIONEPSILON-AITRANSFORMATIONANALYST-0005": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Commercial / Research", "Recommended_Resume": "COMMERCIAL_PRIMARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICCOMMERCIALZETA-COMMERCIALFINANCEANALYST-0006": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Corporate Finance / Transaction / Advisory", "Secondary_Route": "Commercial / Research", "Recommended_Resume": "CF_TRANSACTION_SECONDARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICRISKETA-SENIORRISKMANAGER-0007": {"Hard_Gate_Status": "FAIL", "Decision": "SKIP"},
+  "JOB-20260903-SYNTHETICDATATHETA-BUSINESSANALYTICSANALYST-0008": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Commercial / Research", "Recommended_Resume": "COMMERCIAL_PRIMARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICPLANNINGIOTA-FINANCIALANALYST-0009": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Corporate Finance / Transaction / Advisory", "Recommended_Resume": "CF_TRANSACTION_SECONDARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICCLIENTKAPPA-CLIENTSERVICEANALYST-0010": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": "Corporate Finance / Transaction / Advisory", "Recommended_Resume": "CF_TRANSACTION_SECONDARY", "Decision": "REVIEW"},
+  "JOB-20260903-SYNTHETICENGINEERINGLAMBDA-SOFTWAREMLENGINEER-0011": {"Hard_Gate_Status": "FAIL", "Primary_Route": null, "Recommended_Resume": null, "Decision": "SKIP"},
+  "JOB-20260903-SYNTHETICUNKNOWNMU-ANALYST-0012": {"Hard_Gate_Status": "MANUAL_REVIEW", "Primary_Route": null, "Recommended_Resume": null, "Assessment_Confidence": "LOW", "Decision": "REVIEW"}
+}
