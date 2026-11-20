@@ -1,0 +1,25 @@
+{
+  "version": "0.1",
+  "pipeline_statuses": [
+    "DISCOVERED",
+    "RAW_CAPTURED",
+    "NORMALIZED",
+    "DEDUPLICATED",
+    "READY_FOR_EVALUATION"
+  ],
+  "vacancy_statuses": ["ACTIVE", "CLOSED", "REMOVED", "UNKNOWN"],
+  "source_results": [
+    "SUCCESS",
+    "PARTIAL_SUCCESS",
+    "SOURCE_ACCESS_LIMITED",
+    "PARSING_ERROR",
+    "NORMALIZATION_ERROR",
+    "DUPLICATION_REVIEW_REQUIRED"
+  ],
+  "deduplication_confidence": [
+    "EXACT_DUPLICATE",
+    "HIGH_CONFIDENCE_DUPLICATE",
+    "POSSIBLE_DUPLICATE",
+    "DISTINCT"
+  ]
+}

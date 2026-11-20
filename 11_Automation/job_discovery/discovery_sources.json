@@ -1,0 +1,31 @@
+{
+  "version": "0.1",
+  "discovery_scope": {
+    "countries": [
+      "Singapore"
+    ],
+    "purpose": "Example configuration. Replace boards with public ATS boards you want to monitor.",
+    "candidate_preference_inference": false,
+    "maximum_unique_jobs": 20
+  },
+  "sources": [
+    {
+      "connector": "greenhouse",
+      "board": "example-company",
+      "company": "Example Company",
+      "selected_source_job_ids": []
+    },
+    {
+      "connector": "lever",
+      "board": "example-startup",
+      "company": "Example Startup",
+      "selected_source_job_ids": []
+    },
+    {
+      "connector": "ashby",
+      "board": "ExampleFintech",
+      "company": "Example Fintech",
+      "selected_source_job_ids": []
+    }
+  ]
+}
