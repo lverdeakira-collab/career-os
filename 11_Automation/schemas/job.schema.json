@@ -128,6 +128,7 @@
       "additionalProperties": false
     },
     "Decision": {"enum": ["PRIORITY_APPLY", "APPLY", "REVIEW", "SKIP", null]},
+    "Score_Band_Decision": {"type": ["string", "null"], "enum": ["PRIORITY_APPLY", "APPLY", "REVIEW", "SKIP", null]},
     "Gap_Count": {"type": ["integer", "null"], "minimum": 0},
     "Status": {"enum": ["DISCOVERED", "NORMALIZED", "HARD_GATE_FAILED", "SCORED", "SHORTLISTED", "SKIPPED", "READY_FOR_REVIEW"]},
     "Duplicate_Group": {"type": ["string", "null"]},
