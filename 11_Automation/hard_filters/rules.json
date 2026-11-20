@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "results": ["PASS", "MANUAL_REVIEW", "FAIL"],
+  "categories": [
+    "location_compatibility",
+    "seniority_compatibility",
+    "mandatory_years_of_experience",
+    "mandatory_language",
+    "work_authorization_or_sponsorship",
+    "mandatory_technical_qualification",
+    "mandatory_professional_license",
+    "fundamentally_incompatible_profession",
+    "role_type_outside_scope"
+  ],
+  "experience_year_policy": {
+    "0_to_1": "PASS",
+    "1_to_2": "PASS",
+    "2_to_3": "MANUAL_REVIEW unless graduate/equivalent wording or strong evidence resolves eligibility",
+    "3_plus": "MANUAL_REVIEW by default; FAIL only when clearly mandatory and incompatible",
+    "5_plus": "FAIL for normal early-career applications"
+  },
+  "criticality": {
+    "critical_types": ["MUST_HAVE", "REQUIRED", "LANGUAGE", "LICENSE", "WORK_AUTHORIZATION"],
+    "circuit_breaker_condition": "criticality == CRITICAL AND gap_status == MISSING",
+    "unknown_behavior": "MANUAL_REVIEW when the independent hard-filter policy requires evidence; never trigger the circuit breaker from UNKNOWN alone"
+  },
+  "singapore_policy": {
+    "canonical_package": "11_Automation/policy/singapore/",
+    "company_size_ep_rejection": false,
+    "missing_mycareersfuture_listing_ep_rejection": false,
+    "sponsorship_not_mentioned": "UNKNOWN"
+  },
+  "ambiguity_policy": "Use MANUAL_REVIEW, never FAIL, when a true eligibility condition cannot be established from available text."
+}
