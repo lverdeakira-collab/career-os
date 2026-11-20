@@ -1,0 +1,4 @@
+interface:
+  display_name: "Career Profile"
+  short_description: "Read verified candidate evidence safely"
+  default_prompt: "Use $career-profile to inspect verified Career_OS candidate evidence without adding unsupported facts."
