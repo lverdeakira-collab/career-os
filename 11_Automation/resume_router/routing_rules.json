@@ -9,10 +9,7 @@
     "COMMERCIAL_PRIMARY",
     "CF_TRANSACTION_SECONDARY"
   ],
-  "resume_paths": {
-    "COMMERCIAL_PRIMARY": "16_Resume_Rebuild/production_base_cuts/commercial_primary_base_cut.pdf",
-    "CF_TRANSACTION_SECONDARY": "16_Resume_Rebuild/production_base_cuts/cf_transaction_secondary_base_cut.pdf"
-  },
+  "resume_paths": "Read from candidate_profile.json -> resume_variants (private, user-supplied).",
   "evidence_priority": [
     "job_responsibilities",
     "business_function",
