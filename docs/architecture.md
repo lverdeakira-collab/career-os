@@ -19,7 +19,7 @@
 2. **Detect untrusted instructions** inside the job description and flag them.
 3. **Classify eligibility signals**: work-authorization wording (citizens/residents only, no sponsorship, right to work, local preference) and language requirements (required vs preferred), then apply the candidate's own facts and chosen action for each.
 4. **Hard gates**: seniority, location and employment type, experience requirement semantics, mandatory education or licences, eligibility results → `PASS`, `MANUAL_REVIEW` or `FAIL`.
-5. **Gap analysis**: each requirement becomes `DIRECT_MATCH`, `PARTIAL_MATCH`, `UNKNOWN` or `MISSING`. Only *confirmed* missing critical requirements trip the circuit breaker; unknowns go to review.
+5. **Gap analysis**: each requirement becomes `MATCHED`, `PARTIAL`, `UNKNOWN` (not evidenced) or `MISSING` (confirmed absent). A confirmed-missing critical requirement forces `SKIP`. Unknowns earn partial score credit and send the job to review only for the requirement types listed in `hard_filters/rules.json` (default: must-have skills and licences).
 6. **Fit score**: six fixed components summing to 100, mapped to a decision band, then overridden by gate results.
 7. **Resume routing**: choose one of two frozen base resumes using deterministic rules over three functional routes.
 8. **Human checkpoint**: results are written as records; submission is always a user action.
